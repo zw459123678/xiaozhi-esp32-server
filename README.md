@@ -175,10 +175,12 @@ idf.py build
 5. 打包bin固件
 
 ```
+cd scripts
 python release.py
 ```
 
-编译成功后，会在`release/bin`目录下生成固件文件。
+编译成功后，会在项目根目录下的`build`目录下生成固件文件`merged-binary.bin`。
+这个`merged-binary.bin`就是要烧录到硬件上的固件文件。
 
 6. 烧录固件
 将esp32设备连接电脑，使用chrome浏览器，打开以下网址
