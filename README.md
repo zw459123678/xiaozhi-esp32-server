@@ -1,4 +1,9 @@
 ![图片](docs/images/banner.png)
+
+# 小智 ESP-32 后端服务(xiaozhi-esp32-server)
+
+（中文 | [English](README_en.md)）
+
 本项目为开源智能硬件项目 [xiaozhi-esp32](https://github.com/78/xiaozhi-esp32)
 提供后端服务。根据[小智通信协议](https://ccnphfhqs21z.feishu.cn/wiki/M0XiwldO9iJwHikpXD5cEx71nKh)使用`Python`实现。
 
@@ -131,7 +136,8 @@ python app.py
 
 2. 打开`xiaozhi-esp32/main/Kconfig.projbuild`文件，找到`WEBSOCKET_URL`的`default`的内容，把`wss://api.tenclass.net`
    改成你自己的地址，例如
-   修改前：
+
+修改前：
 
 ```
 config WEBSOCKET_URL
@@ -185,13 +191,13 @@ python release.py
 这个`merged-binary.bin`就是要烧录到硬件上的固件文件。
 
 6. 烧录固件
-将esp32设备连接电脑，使用chrome浏览器，打开以下网址
+   将esp32设备连接电脑，使用chrome浏览器，打开以下网址
 
 ```
 https://espressif.github.io/esp-launchpad/
 ```
 
-打开这个教程，[Flash工具/Web端烧录固件（无IDF开发环境）](https://ccnphfhqs21z.feishu.cn/wiki/F5krwD16viZoF0kKkvDcrZNYnhb)。
+打开这个教程，[Flash工具/Web端烧录固件（无IDF开发环境）](https://ccnphfhqs21z.feishu.cn/wiki/Zpz4wXBtdimBrLk25WdcXzxcnNS)。
 翻到：`方式二：ESP-Launchpad 浏览器WEB端烧录`，从`3. 烧录固件/下载到开发板`开始，按照教程操作。
 
 # 常见问题
