@@ -179,9 +179,13 @@ idf.py set-target esp32s3
 idf.py menuconfig
 ```
 
+![图片](docs/images/build_setting01.png)
+
 After entering the menu configuration, then enter `xiaozhi assistant`, set the` connection_type` to `websocket`
 Go back to the main menu, then enter `xiaozhi assistant`, set the `BOARD_TYPE` of your board
 Save exit and return to the terminal command line.
+
+![图片](docs/images/build_setting02.png)
 
 4. Build and package:
 
