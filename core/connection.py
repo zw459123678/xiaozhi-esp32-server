@@ -12,6 +12,7 @@ from collections import deque
 from core.utils.util import is_segment
 from core.utils.dialogue import Message, Dialogue
 from core.handle.textHandle import handleTextMessage
+from core.handle.abortHandle import handleAbortMessage
 from core.handle.helloHandle import handleHelloMessage
 from core.utils.util import get_string_no_punctuation_or_emoji
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
@@ -28,6 +29,7 @@ class ConnectionHandler:
         self.session_id = None
         self.prompt = None
         self.welcome_msg = None
+        self.client_abort = False
 
         # 线程任务相关
         self.loop = asyncio.get_event_loop()
@@ -100,6 +102,8 @@ class ConnectionHandler:
             msg_json = json.loads(message)
             if msg_json["type"] == "hello":
                 await handleHelloMessage(self, "你好")
+            if msg_json["type"] == "abort":
+                await handleAbortMessage(self)
         except json.JSONDecodeError:
             await handleTextMessage(self, message)
 
@@ -126,6 +130,11 @@ class ConnectionHandler:
         self.llm_finish_task = False
         for content in llm_responses:
             response_message.append(content)
+            # 如果中途被打断，就停止生成
+            if self.client_abort:
+                start = len(response_message)
+                break
+
             end_time = time.time()  # 记录结束时间
             self.logger.debug(f"大模型返回时间时间: {end_time - start_time} 秒, 生成token={content}")
             if is_segment(response_message):
@@ -169,9 +178,11 @@ class ConnectionHandler:
                 except Exception as e:
                     self.logger.error(f"TTS 任务出错: {e}")
                     continue
-                asyncio.run_coroutine_threadsafe(
-                    sendAudioMessage(self, opus_datas, duration, text), self.loop
-                )
+                if not self.client_abort:
+                    # 如果没有中途打断就发送语音
+                    asyncio.run_coroutine_threadsafe(
+                        sendAudioMessage(self, opus_datas, duration, text), self.loop
+                    )
                 if self.tts.delete_audio_file and os.path.exists(tts_file):
                     os.remove(tts_file)
             except Exception as e:

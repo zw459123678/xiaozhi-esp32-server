@@ -20,6 +20,7 @@ async def handleAudioMessage(conn, audio):
     conn.asr_audio.append(audio)
     # 如果本段有声音，且已经停止了
     if conn.client_voice_stop:
+        conn.client_abort = False
         conn.asr_server_receive = False
         text, file_path = conn.asr.speech_to_text(conn.asr_audio, conn.session_id)
         logger.info(f"识别文本: {text}")

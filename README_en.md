@@ -32,13 +32,13 @@ To fully experience this project, follow these steps:
 ## Implemented
 
 - `xiaozhi-esp32` WebSocket communication protocol
+- Support interrupt dialogue in real time, try to say a sentence when chatting `你好小智`
 - Support for 5 languages: Mandarin, Cantonese, English, Japanese, Korean (FunASR - default)
 - Flexible LLM switching (ChatGLM - default, Dify, DeepSeek)
 - Flexible TTS switching (EdgeTTS - default, ByteDance Doubao TTS)
 
 ## In Progress
 
-- Conversation interruption
 - Manual button-triggered dialogue
 - Sleep mode after inactivity
 - Dialogue memory
@@ -223,7 +223,12 @@ both are slow, the network environment may need to be optimized.
 Suggestions: Both big models and TTS are dependent interfaces. If the network environment is not good, you can consider
 changing the local model. Or try to switch different interface models.
 
-## 3、For more questions, contact us to feedback
+## 3、Why is my ChatGLMLLM replying to a bit? Obviously it is Xiaozhi, but treats me as Xiaozhi.
+
+Suggestion: The first step can be to adjust the prompt words in the configuration file. The second step, the model used
+in the configuration file is the free model: `glm-4-flash`. You might consider switching to the paid version.
+
+## 4、For more questions, contact us to feedback
 
 ![图片](docs/images/wechat.jpg)
 
