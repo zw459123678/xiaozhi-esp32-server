@@ -87,13 +87,18 @@ Download [SenseVoiceSmall](https://modelscope.cn/models/iic/SenseVoiceSmall/reso
 
 ### 4.Configure Project
 
-Modify the `Config.yaml` file to configure the various parameters required for this project. The default LLM uses
-`Chatglmllm`, you need to configure the key to start.
-The default TTS uses `Edgetts`. This does not require configuration. If you need to replace it with` TTS`, you need to
+Modify the `config.yaml` file to configure the various parameters required for this project. The default LLM uses
+`ChatGLMLLM`, you need to configure the key to start.
+The default TTS uses `EdgeTTS`. This does not require configuration. If you need to replace it with`Doubao TTS`, you
+need to
 configure the key.
 
-Configuration description: This is the default component of each function, such as LLM default to use the `Chatglmllm`
+Configuration description: This is the default component of each function, such as LLM default to use the `ChatGLMLLM`
 model. If you need to switch the model, it is the corresponding name.
+
+The default configuration of this project is only the lowest operating cost configuration（`glm-4-flash`and`EdgeTTS`are
+free），If you need to be better and faster, you need to combine the use of the deployment environment to switch the use
+of each component。
 
 ```
 selected_module:
@@ -225,10 +230,15 @@ changing the local model. Or try to switch different interface models.
 
 ## 3、Why is my ChatGLMLLM replying to a bit? Obviously it is Xiaozhi, but treats me as Xiaozhi.
 
-Suggestion: The first step can be to adjust the prompt words in the configuration file. The second step, the model used
-in the configuration file is the free model: `glm-4-flash`. You might consider switching to the paid version.
+Suggestion: You can modify the prompts in the configuration file first. You can also replace the free `GLM-4-FLASH` to
+the model of other toll versions of `ChatGlm`.
 
-## 4、For more questions, contact us to feedback
+## 4、I want to control the operation of electric lights, air conditioners, remote switching and other operations through Xiaozhi.
+
+Suggestion: In the configuration file, set the `LLM` to`DifyLLM`, and then arrange the smart application by the
+`Dify`.
+
+## 5、For more questions, contact us to feedback
 
 ![图片](docs/images/wechat.jpg)
 
