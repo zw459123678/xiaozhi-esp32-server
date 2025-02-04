@@ -11,7 +11,10 @@ async def handleAudioMessage(conn, audio):
     if not conn.asr_server_receive:
         logger.debug(f"前期数据处理中，暂停接收")
         return
-    have_voice = conn.vad.is_vad(conn, audio)
+    if conn.client_listen_mode == "auto":
+        have_voice = conn.vad.is_vad(conn, audio)
+    else:
+        have_voice = conn.client_have_voice
 
     # 如果本次没有声音，本段也没声音，就把声音丢弃了
     if have_voice == False and conn.client_have_voice == False:
@@ -26,24 +29,27 @@ async def handleAudioMessage(conn, audio):
         logger.info(f"识别文本: {text}")
         text_len = remove_punctuation_and_length(text)
         if text_len > 0:
-            stt_text = get_string_no_punctuation_or_emoji(text)
-            await conn.websocket.send(json.dumps({
-                "type": "stt",
-                "text": stt_text,
-                "session_id": conn.session_id}
-            ))
-            await conn.websocket.send(
-                json.dumps({
-                    "type": "llm",
-                    "text": "😊",
-                    "emotion": "happy",
-                    "session_id": conn.session_id}
-                ))
-            conn.executor.submit(conn.chat, text)
+            await startToChat(conn, text)
         else:
             conn.asr_server_receive = True
         conn.asr_audio.clear()
         conn.reset_vad_states()
+
+async def startToChat(conn, text):
+    stt_text = get_string_no_punctuation_or_emoji(text)
+    await conn.websocket.send(json.dumps({
+        "type": "stt",
+        "text": stt_text,
+        "session_id": conn.session_id}
+    ))
+    await conn.websocket.send(
+        json.dumps({
+            "type": "llm",
+            "text": "😊",
+            "emotion": "happy",
+            "session_id": conn.session_id}
+        ))
+    conn.executor.submit(conn.chat, text)
 
 
 async def sendAudioMessage(conn, audios, duration, text):

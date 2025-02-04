@@ -32,16 +32,16 @@ To fully experience this project, follow these steps:
 ## Implemented
 
 - `xiaozhi-esp32` WebSocket communication protocol
-- Support interrupt dialogue in real time, try to say a sentence when chatting `你好小智`
+- Supports wake-word initiated dialogue, manual dialogue, and real-time interruption of dialogue.
 - Support for 5 languages: Mandarin, Cantonese, English, Japanese, Korean (FunASR - default)
 - Flexible LLM switching (ChatGLM - default, Dify, DeepSeek)
 - Flexible TTS switching (EdgeTTS - default, ByteDance Doubao TTS)
 
 ## In Progress
 
-- Manual button-triggered dialogue
 - Sleep mode after inactivity
 - Dialogue memory
+- Change the mood mode
 
 ## Dependencies
 

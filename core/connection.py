@@ -12,8 +12,6 @@ from collections import deque
 from core.utils.util import is_segment
 from core.utils.dialogue import Message, Dialogue
 from core.handle.textHandle import handleTextMessage
-from core.handle.abortHandle import handleAbortMessage
-from core.handle.helloHandle import handleHelloMessage
 from core.utils.util import get_string_no_punctuation_or_emoji
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
 from core.handle.audioHandle import handleAudioMessage, sendAudioMessage
@@ -29,7 +27,10 @@ class ConnectionHandler:
         self.session_id = None
         self.prompt = None
         self.welcome_msg = None
+
+        # 客户端状态相关
         self.client_abort = False
+        self.client_listen_mode = "auto"
 
         # 线程任务相关
         self.loop = asyncio.get_event_loop()
@@ -91,21 +92,9 @@ class ConnectionHandler:
     async def _route_message(self, message):
         """消息路由"""
         if isinstance(message, str):
-            await self._handle_text(message)
+            await handleTextMessage(self, message)
         elif isinstance(message, bytes):
             await handleAudioMessage(self, message)
-
-    async def _handle_text(self, message):
-        """处理文本消息"""
-        self.logger.info(f"收到文本消息：{message}")
-        try:
-            msg_json = json.loads(message)
-            if msg_json["type"] == "hello":
-                await handleHelloMessage(self, "你好")
-            if msg_json["type"] == "abort":
-                await handleAbortMessage(self)
-        except json.JSONDecodeError:
-            await handleTextMessage(self, message)
 
     def _initialize_components(self):
         self.prompt = self.config["prompt"]
