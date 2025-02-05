@@ -102,7 +102,7 @@ class ConnectionHandler:
         if "{date_time}" in self.prompt:
             date_time = time.strftime("%Y-%m-%d %H:%M", time.localtime())
             self.prompt = self.prompt.replace("{date_time}", date_time)
-        self.dialogue.put(Message(role="user", content=self.prompt))
+        self.dialogue.put(Message(role="system", content=self.prompt))
 
     def chat(self, query):
         self.dialogue.put(Message(role="user", content=query))

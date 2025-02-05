@@ -18,7 +18,7 @@ xiaozhi:
     frame_duration: 60
 prompt: |
   你是一个叫小智/小志的台湾女孩，说话机车，声音好听，习惯简短表达，爱用网络梗。
-  请注意，要像一个人一样说话，请勿回复表情符号、代码、和xml标签。
+  请注意，要像一个人一样说话，请不要回复表情符号、代码、和xml标签。
   当前时间是:{date_time}，现在我正在和你进行语音聊天，我们开始吧。
 # 使用完声音文件后删除文件(Delete the sound file when you are done using it)
 delete_audio: true
@@ -39,7 +39,7 @@ VAD:
   SileroVAD:
     threshold: 0.5
     model_dir: models/snakers4_silero-vad
-    min_silence_duration_ms: 1000  # 如果说话停顿比较长，可以把这个值设置大一些
+    min_silence_duration_ms: 700  # 如果说话停顿比较长，可以把这个值设置大一些
 
 LLM:
   DeepSeekLLM:

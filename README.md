@@ -223,7 +223,18 @@ https://espressif.github.io/esp-launchpad/
 
 建议：在配置文件里，将`LLM`设置成`DifyLLM`，然后通过`Dify`编排智能体实现。
 
-## 5、更多问题，可联系我们反馈
+## 5、我说话很慢，我停顿一下，小智老是抢我的话，咋办。
+
+建议：在配置文件里，找到这一段，将`min_silence_duration_ms`值改大一点，比如改成`1000`。
+```
+VAD:
+  SileroVAD:
+    threshold: 0.5
+    model_dir: models/snakers4_silero-vad
+    min_silence_duration_ms: 300  # 如果说话停顿比较长，可以把这个值设置大一些
+```
+
+## 6、更多问题，可联系我们反馈
 
 ![图片](docs/images/wechat.jpg)
 

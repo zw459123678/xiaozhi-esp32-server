@@ -212,7 +212,7 @@ https://espressif.github.io/esp-launchpad/
 ```
 
 Open this
-tutorial, [Flash Tools/Web -side Burning Folding Step (No IDF Development Environment)] (https://ccnphfhqs21z.feishu.cn/wiki/Zpz4wXBtdimBrLk25WdcXzxcnNS).
+tutorial, [Flash Tools/Web -side Burning Folding Step (No IDF Development Environment)](https://ccnphfhqs21z.feishu.cn/wiki/Zpz4wXBtdimBrLk25WdcXzxcnNS).
 Turn to: `Method 2: ESP-LAUNCHPAD browser web-end burning`, start from
 `3. Burning firmware/download to the development board`, follow the tutorial operation.
 
@@ -238,11 +238,22 @@ the model of other toll versions of `ChatGlm`.
 Suggestion: In the configuration file, set the `LLM` to`DifyLLM`, and then arrange the smart application by the
 `Dify`.
 
-## 5、For more questions, contact us to feedback
+## 5、I said very slowly, I paused, Xiaozhi always grabbed me, what to do.
+
+Suggestion: In the configuration file, find this section, change the `min_silence_duration_ms` value, such as change to` 1000`.
+```
+VAD:
+  SileroVAD:
+    threshold: 0.5
+    model_dir: models/snakers4_silero-vad
+    min_silence_duration_ms: 300  # 如果说话停顿比较长，可以把这个值设置大一些
+```
+
+## 6、For more questions, contact us to feedback
 
 ![图片](docs/images/wechat.jpg)
 
 # Acknowledgments
 
-- This project is inspired by the [Bailin Voice Dialogue Robot] (https://github.com/wwbin2017/bailing) project, and the
+- This project is inspired by the [Bailin Voice Dialogue Robot](https://github.com/wwbin2017/bailing) project, and the
   basic idea of the project is completed.
