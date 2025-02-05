@@ -54,6 +54,7 @@ LLM:
     api_key: 你的bigmodel api key
   DifyLLM:
     # 建议使用本地部署的dify接口，国内部分区域访问dify公有云接口可能会受限
+    # 如果使用DifyLLM，配置文件里prompt(提示词)是无效的，需要在dify控制台设置提示词
     base_url: 你的私有化部署的dify接口地址
     api_key: 你的dify api key
 TTS:

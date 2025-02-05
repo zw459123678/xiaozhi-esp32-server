@@ -52,15 +52,113 @@
 
 # 部署方式
 
-本项目暂时只支持本地源码运行，未来将支持docker快速部署。
+本项目支持docker快速部署和本地源码运行。如果您主要是想快速体验，推荐使用docker部署。如果想深入了解本项目，推荐本地源码运行。
 
-## 本地源码运行
+## 方式一：docker快速部署
+
+如果你的电脑是`arm`架构的电脑，请暂时使用`方式二：本地源码运行`。`arm`架构需要再等几天，因为目前还没有适配arm架构的镜像。
+
+1. 安装docker
+
+如果您的电脑还没安装docker，可以按照这里的教程安装：[docker安装](https://www.runoob.com/docker/ubuntu-docker-install.html)
+
+2. 创建目录
+
+安装完后，你需要为这个项目找一个安放配置文件的目录，我们暂且称它为`项目目录`，这个目录最好是一个新建的空的目录。
+
+3. 下载配置文件
+
+用浏览器打开[这个链接](https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/config.yaml)。
+
+在页面的右侧找到名称为`RAW`按钮，在`RAW`按钮的旁边，找到下载的图标，点击下载按钮，下载`config.yaml`文件。 把文件下载到你的`项目目录`。
+
+4. 修改配置文件
+
+修改刚才你下载的`config.yaml`文件，配置本项目所需的各种参数。默认的LLM使用的是`ChatGLMLLM`，你需要配置密钥，才能启动。
+
+默认的TTS使用的是`EdgeTTS`，这个无需配置，如果你需要更换成`豆包TTS`，则需要配置密钥。
+
+配置说明：这里是各个功能使用的默认组件，例如LLM默认使用`ChatGLMLLM`模型。如果需要切换模型，就是改对应的名称。
+
+本项目的默认配置原则是成本最低配置原则（`glm-4-flash`和`EdgeTTS`都是免费的），如果需要更优的更快的搭配，需要自己结合部署环境切换各组件的使用。
+
+```
+selected_module:
+  ASR: FunASR
+  VAD: SileroVAD
+  LLM: ChatGLMLLM
+  TTS: EdgeTTS
+```
+
+比如修改`LLM`使用的组件，就看本项目支持哪些`LLM`，如下就是支持`DeepSeekLLM`、`ChatGLMLLM`。你们在`selected_module`修改成对应的LLM
+
+```
+LLM:
+  DeepSeekLLM:
+    ...
+  ChatGLMLLM:
+    ...
+  DifyLLM:
+    ...
+```
+
+有些服务，比如如果你使用`Dify`、`豆包的TTS`，是需要密钥的，记得在配置文件加上哦！
+
+5. 执行docker命令
+
+打开命令行工具，`cd` 进入到你的`项目目录`，执行以下命令
+
+```
+#如果你是linux，执行
+ls
+#如果你是windows，执行
+dir
+```
+
+如果你能看到`config.yaml`文件，确确实实进入到了`项目目录`，接着执行以下命令：
+
+```
+docker run -d --name xiaozhi-esp32-server --restart always -p 8000:8000 -v ./config.yaml:/opt/xiaozhi-es32-server/config.yaml ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
+```
+
+如果首次执行，可能需要几分钟时间，你要耐心等待他完成拉取。正常拉取完成后，你可以在命令行执行以下命令查看服务是否启动成功
+
+```
+docker ps
+```
+
+如果你能看到`xiaozhi-server`，说明服务启动成功。那你还可以进一步执行以下命令，查看服务的日志
+
+```
+docker logs -f xiaozhi-esp32-server
+```
+
+如果你能看到，类似以下日志,则是本项目服务启动成功的标志。
+
+```
+2025-xx-xx xx:51:59,492 - core.server - INFO - Server is running at ws://xx.xx.xx.xxx:8000
+2025-xx-xx xx:51:59,516 - websockets.server - INFO - server listening on 0.0.0.0:8000
+```
+
+接下来，你就可以开始 `编译esp32固件`了，请往下翻，翻到编译`esp32固件`相关章节。那么由于你是用docker部署，你要自己查看自己本机电脑的ip是多少。
+正常来说，假设你的ip是`192.168.1.25`，那么你的接口地址就是：`ws://192.168.1.25:8000`。这个信息很有用的，后面`编译esp32固件`需要用到。
+
+后期如果想升级版本，可以这么操作
+1、备份好`config.yaml`文件，一些关键的配置到时复制到新的`config.yaml`文件里。
+2、执行以下命令
+```
+docker stop xiaozhi-esp32-server
+docker rm xiaozhi-esp32-server
+docker rmi ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
+```
+3.按本教程重新来一遍
+
+
+## 方式二：本地源码运行
 
 ### 1.安装基础环境
 
-本项目使用`python`语言开发，依赖`python`、`conda`环境，运行本项目需安装`python`、`conda`。
-
-安装后使用`conda`创建以下环境
+本项目依赖`ffmpeg`、`libopus-dev`、`conda`，安装好后开始执行以下命令。
 
 ```
 conda remove -n xiaozhi-esp32-server --all -y
@@ -119,6 +217,8 @@ LLM:
 启动项目
 
 ```
+# 确保在本项目的根目录下执行
+conda activate xiaozhi-esp32-server
 python app.py
 ```
 
@@ -131,13 +231,13 @@ python app.py
 
 其中上面的`ws://192.168.1.25:8000`就是本项目提供的接口地址了，当然你自己的机器和我的是不一样的，记得要找到自己的地址。
 
-### 6.编译esp32固件
+# 编译esp32固件
 
 1. 下载`xiaozhi-esp32`
    项目，按照这个教程配置项目环境[《Windows搭建 ESP IDF 5.3.2开发环境以及编译小智》](https://icnynnzcwou8.feishu.cn/wiki/JEYDwTTALi5s2zkGlFGcDiRknXf)
 
 2. 打开`xiaozhi-esp32/main/Kconfig.projbuild`文件，找到`WEBSOCKET_URL`的`default`的内容，把`wss://api.tenclass.net`
-   改成你自己的地址，例如
+   改成你自己的地址，例如，我的接口地址是`ws://192.168.1.25:8000`，就把内容改成这个。
 
 修改前：
 
@@ -171,6 +271,7 @@ idf.py set-target esp32s3
 # 进入菜单配置
 idf.py menuconfig
 ```
+
 ![图片](docs/images/build_setting01.png)
 
 进入菜单配置后，再进入`Xiaozhi Assistant`，将`CONNECTION_TYPE`设置为`Websocket`
@@ -210,6 +311,7 @@ https://espressif.github.io/esp-launchpad/
 ## 1、TTS 经常失败，经常超时
 
 建议：如果`EdgeTTS`慢或经常失败，可以更换成`火山引擎的豆包TTS`，如果两个都慢，可能所处的网络环境需要优化一下。
+有部分网友反馈，使用`EdgeTTS`时，最好不要使用梯子，容易失败。
 
 ## 2、大模型回复有点慢
 
@@ -226,12 +328,13 @@ https://espressif.github.io/esp-launchpad/
 ## 5、我说话很慢，我停顿一下，小智老是抢我的话，咋办。
 
 建议：在配置文件里，找到这一段，将`min_silence_duration_ms`值改大一点，比如改成`1000`。
+
 ```
 VAD:
   SileroVAD:
     threshold: 0.5
     model_dir: models/snakers4_silero-vad
-    min_silence_duration_ms: 300  # 如果说话停顿比较长，可以把这个值设置大一些
+    min_silence_duration_ms: 700  # 如果说话停顿比较长，可以把这个值设置大一些
 ```
 
 ## 6、更多问题，可联系我们反馈

@@ -5,7 +5,7 @@ sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin 
 ```
 2、编译docker镜像
 ```
-# 普通运行
+# 普通编译
 docker build -t xiaozhi-esp32-server:local -f ./Dockerfile .
 ```
 3、测试本地镜像
@@ -13,9 +13,11 @@ docker build -t xiaozhi-esp32-server:local -f ./Dockerfile .
 docker stop xiaozhi-esp32-server
 docker rm xiaozhi-esp32-server
 
-docker run -d --name xiaozhi-esp32-server -p 8000:8000 xiaozhi-esp32-server:local
-# 或者挂载本地目录，方便更新代码
-docker run -d --name xiaozhi-esp32-server -p 8000:8000 -v /home/system/xiaozhi-esp32-server:/opt/xiaozhi-esp32-server xiaozhi-esp32-server:local
+cp /Users/hrz/myworkspace/esp32/xiaozhi-esp32-server/config.yaml ./
+docker run -d --name xiaozhi-esp32-server --restart always -p 8000:8000 -v ./config.yaml:/opt/xiaozhi-es32-server/config.yaml xiaozhi-esp32-server:local
+
+docker logs -f xiaozhi-esp32-server
+
 ```
 5、发布腾讯云镜像
 ```
@@ -42,6 +44,4 @@ docker manifest push ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
 6、运行线上镜像
 ```
 docker run -d --name xiaozhi-esp32-server --restart unless-stopped -p 8000:8000 ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest-amd64
-# 或者挂载本地目录，方便更新代码
-docker run -d --name xiaozhi-esp32-server --restart unless-stopped -p 8000:8000 -v /home/system/xiaozhi-esp32-server:/opt/xiaozhi-esp32-server ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest-amd64
 ```

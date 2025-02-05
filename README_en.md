@@ -57,13 +57,123 @@ To fully experience this project, follow these steps:
 
 # Deployment
 
-Currently supports local source code execution. Docker deployment coming soon.
+This project supports rapid deployment of docker and local source code operation. If you want to have a quick
+experience, it is recommended to use docker to deploy. If you want to have an in-depth understanding of this project, it
+is recommended to run the local source code.
 
-## Local Source Code Deployment
+## Method 1: Quick deployment of docker
+
+If your computer is an `arm` architecture computer, please use `Method 2: Run local source code`. The `arm` architecture
+needs to wait for a few more days, because there is currently no mirror that is suitable for the arm architecture.
+
+1. Install docker
+
+If your computer has not installed docker, you can follow the tutorial here to install
+it:[Install docker](https://www.runoob.com/docker/ubuntu-docker-install.html)
+
+2. Create a directory
+
+After installation, you need to find a directory for the configuration file for this project. Let's call it the
+`project directory` for the time being. This directory is preferably a newly created empty directory.
+
+3. Download the configuration file
+
+Open with a browser[This link](https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/config.yaml)。
+
+On the right side of the page, find the button named `RAW`, next to the `RAW` button, find the download icon, click the
+Download button, and download the `config.yaml` file. Download the file to your `project directory`.
+
+4. Configure Project
+
+Modify the `config.yaml` file to configure the various parameters required for this project. The default LLM uses
+`ChatGLMLLM`, you need to configure the key to start.
+The default TTS uses `EdgeTTS`. This does not require configuration. If you need to replace it with`Doubao TTS`, you
+need to
+configure the key.
+
+Configuration description: This is the default component of each function, such as LLM default to use the `ChatGLMLLM`
+model. If you need to switch the model, it is the corresponding name.
+
+The default configuration of this project is only the lowest operating cost configuration（`glm-4-flash`and`EdgeTTS`are
+free），If you need to be better and faster, you need to combine the use of the deployment environment to switch the use
+of each component。
+
+```
+selected_module:
+  ASR: FunASR
+  VAD: SileroVAD
+  LLM: ChatGLMLLM
+  TTS: EdgeTTS
+```
+
+For example, modify the components used by `llm`, depending on which` llm` supports this project, as follows, it
+supports `Deepseekllm` and` Chatglmllm`. You are modified to the corresponding LLM in `selectd_module`
+
+```
+LLM:
+  DeepSeekLLM:
+    ...
+  ChatGLMLLM:
+    ...
+  DifyLLM:
+    ...
+```
+
+Some services, for example, if you use the TTS` of the `dify` and` bean bags, you need a key, remember to add the
+configuration file!
+
+5. Execute the docker command
+
+Open the command line tool, `cd` enter your `project directory`, and execute the following command
+
+```
+#If you are Linux, execute
+ls
+#If you are Windows, execute
+dir
+```
+
+If you can see the `config.yaml` file, you have indeed entered the `project directory`, and then execute the following
+command:
+
+```
+docker run -d --name xiaozhi-esp32-server --restart always -p 8000:8000 -v ./config.yaml:/opt/xiaozhi-es32-server/config.yaml ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
+```
+
+If executed for the first time, it may take several minutes, and you have to be patient to wait for it to complete the
+pull. After normal pulling is completed, you can execute the following command on the command line to see if the service
+is started successfully.
+
+```
+docker ps
+```
+
+If you can see `xiaozhi-server`, it means that the service starts successfully. Then you can further execute the
+following command to view the service log
+
+```
+docker logs -f xiaozhi-esp32-server
+```
+
+If you can see, similar to the following logs, it is a sign that the service of this project is successfully launched.
+
+```
+2025-xx-xx xx:51:59,492 - core.server - INFO - Server is running at ws://xx.xx.xx.xxx:8000
+2025-xx-xx xx:51:59,516 - websockets.server - INFO - server listening on 0.0.0.0:8000
+```
+
+Next, you can start `compiling esp32 firmware`. Please go down and turn to the relevant chapter on
+`compiling esp32 firmware`. So since you are deploying with docker, you have to check the IP of your native computer by
+yourself.
+Normally, assuming your ip is `192.168.1.25`, then your interface address is: `ws://192.168.1.25:8000`. This information
+is very useful, and it is required to `compile esp32 firmware` later.
+
+## Method 2 : Local Source Code Deployment
 
 ### 1.Install Prerequisites
 
-Requires `Python` and `Conda` environments:
+This project relies on `ffmpeg`, `libopus-dev`, and `conda`. After installation, it starts executing the following
+commands.
 
 ```
 conda remove -n xiaozhi-esp32-server --all -y
@@ -74,6 +184,7 @@ conda activate xiaozhi-esp32-server
 ### 2.Install Dependencies
 
 ```
+# Clone the project
 cd xiaozhi-esp32-server
 conda activate xiaozhi-esp32-server
 pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/
@@ -129,6 +240,8 @@ configuration file!
 Run the Project
 
 ```
+# Make sure to execute in the root directory of this project
+conda activate xiaozhi-esp32-server
 python app.py
 ```
 
@@ -142,7 +255,7 @@ You'll see the WebSocket endpoint in logs:
 Among them, the `ws://192.168.1.25:8000` is the interface address provided by this project. Of course, your own machine
 is different from mine. Remember to find your own address.
 
-### 6.Compile ESP32 Firmware
+# Compile ESP32 Firmware
 
 1. Download `xiaozhi-esp32` project, configure the project environment according to this
    tutorial [" Windows builds ESP IDF 5.3.2 Development Environment and Compiles Xiaozhi "](https://icnynnzcwou8.feishu.cn/wiki/JEYDwTTALi5s2zkGlFGcDiRknXf)
@@ -240,13 +353,15 @@ Suggestion: In the configuration file, set the `LLM` to`DifyLLM`, and then arran
 
 ## 5、I said very slowly, I paused, Xiaozhi always grabbed me, what to do.
 
-Suggestion: In the configuration file, find this section, change the `min_silence_duration_ms` value, such as change to` 1000`.
+Suggestion: In the configuration file, find this section, change the `min_silence_duration_ms` value, such as change to
+` 1000`.
+
 ```
 VAD:
   SileroVAD:
     threshold: 0.5
     model_dir: models/snakers4_silero-vad
-    min_silence_duration_ms: 300  # 如果说话停顿比较长，可以把这个值设置大一些
+    min_silence_duration_ms: 700  # 如果说话停顿比较长，可以把这个值设置大一些
 ```
 
 ## 6、For more questions, contact us to feedback
