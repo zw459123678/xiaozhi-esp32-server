@@ -196,6 +196,15 @@ pip install -r requirements.txt
 Download [SenseVoiceSmall](https://modelscope.cn/models/iic/SenseVoiceSmall/resolve/master/model.pt) to
 `model/SenseVoiceSmall`.
 
+By default, the `SenseVoiceSmall` model is used to convert voice to text. Because the model is large, it needs to be
+downloaded independently. After downloading, place the `model.pt` file in the `model/SenseVoiceSmall` directory. Choose
+any of the following two download routes.
+
+- Line 1: Download Ali Magic
+  Tower[SenseVoiceSmall](https://modelscope.cn/models/iic/SenseVoiceSmall/resolve/master/model.pt)
+- Line 2: Baidu Netdisk download[SenseVoiceSmall](https://pan.baidu.com/share/init?surl=QlgM58FHhYv1tFnUT_A8Sg&pwd=qvna)
+  提取码: `qvna`
+
 ### 4.Configure Project
 
 Modify the `config.yaml` file to configure the various parameters required for this project. The default LLM uses
@@ -373,4 +382,5 @@ VAD:
 - This project is inspired by the [Bailin Voice Dialogue Robot](https://github.com/wwbin2017/bailing) project, and the
   basic idea of the project is completed。
 - Thanks to [Tencent Cloud] (https://cloud.tencent.com/) for providing free docker space for this project。
-- Thanks to [tenclass](https://www.tenclass.com/)Provide adequate documentation support on Xiaozhi Communication Protocol。
+- Thanks to [tenclass](https://www.tenclass.com/)Provide adequate documentation support on Xiaozhi Communication
+  Protocol。
