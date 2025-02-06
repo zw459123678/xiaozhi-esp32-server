@@ -371,4 +371,6 @@ VAD:
 # Acknowledgments
 
 - This project is inspired by the [Bailin Voice Dialogue Robot](https://github.com/wwbin2017/bailing) project, and the
-  basic idea of the project is completed.
+  basic idea of the project is completed。
+- Thanks to [Tencent Cloud] (https://cloud.tencent.com/) for providing free docker space for this project。
+- Thanks to [tenclass](https://www.tenclass.com/)Provide adequate documentation support on Xiaozhi Communication Protocol。
