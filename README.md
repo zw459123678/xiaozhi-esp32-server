@@ -118,7 +118,7 @@ dir
 如果你能看到`config.yaml`文件，确确实实进入到了`项目目录`，接着执行以下命令：
 
 ```
-docker run -d --name xiaozhi-esp32-server --restart always -p 8000:8000 -v ./config.yaml:/opt/xiaozhi-es32-server/config.yaml ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
+docker run -d --name xiaozhi-esp32-server --restart always --security-opt seccomp:unconfined -p 8000:8000 -v $(pwd)/config.yaml:/opt/xiaozhi-es32-server/config.yaml ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
 ```
 
 如果首次执行，可能需要几分钟时间，你要耐心等待他完成拉取。正常拉取完成后，你可以在命令行执行以下命令查看服务是否启动成功

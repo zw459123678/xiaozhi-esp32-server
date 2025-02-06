@@ -137,7 +137,7 @@ If you can see the `config.yaml` file, you have indeed entered the `project dire
 command:
 
 ```
-docker run -d --name xiaozhi-esp32-server --restart always -p 8000:8000 -v ./config.yaml:/opt/xiaozhi-es32-server/config.yaml ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
+docker run -d --name xiaozhi-esp32-server --restart always --security-opt seccomp:unconfined -p 8000:8000 -v $(pwd)/config.yaml:/opt/xiaozhi-es32-server/config.yaml ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
 ```
 
 If executed for the first time, it may take several minutes, and you have to be patient to wait for it to complete the
