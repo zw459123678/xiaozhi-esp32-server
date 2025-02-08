@@ -70,7 +70,8 @@
 
 用浏览器打开[这个链接](https://github.com/xinnan-tech/xiaozhi-esp32-server/blob/main/config.yaml)。
 
-在页面的右侧找到名称为`RAW`按钮，在`RAW`按钮的旁边，找到下载的图标，点击下载按钮，下载`config.yaml`文件。 把文件下载到你的`项目目录`。
+在页面的右侧找到名称为`RAW`按钮，在`RAW`按钮的旁边，找到下载的图标，点击下载按钮，下载`config.yaml`文件。 把文件下载到你的
+`项目目录`。
 
 ### 4. 修改配置文件
 
@@ -141,7 +142,8 @@ docker logs -f xiaozhi-esp32-server
 ```
 
 接下来，你就可以开始 `编译esp32固件`了，请往下翻，翻到编译`esp32固件`相关章节。那么由于你是用docker部署，你要自己查看自己本机电脑的ip是多少。
-正常来说，假设你的ip是`192.168.1.25`，那么你的接口地址就是：`ws://192.168.1.25:8000`。这个信息很有用的，后面`编译esp32固件`需要用到。
+正常来说，假设你的ip是`192.168.1.25`，那么你的接口地址就是：`ws://192.168.1.25:8000`。这个信息很有用的，后面`编译esp32固件`
+需要用到。
 
 后期如果想升级版本，可以这么操作
 
@@ -157,24 +159,28 @@ docker rmi ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
 
 3.按本教程重新来一遍
 
-
 ## 方式二：本地源码运行
 
 ### 1.安装基础环境
 
 本项目使用`conda`管理依赖环境，安装好后开始执行以下命令。
+
 ```
 conda remove -n xiaozhi-esp32-server --all -y
 conda create -n xiaozhi-esp32-server python=3.10 -y
 conda activate xiaozhi-esp32-server
 ```
+
 如果你的电脑是windows，执行：
+
 ```
 conda activate xiaozhi-esp32-server
 conda install conda-forge::libopus
 conda install conda-forge::ffmpeg
 ```
+
 如果你的电脑是ubuntu，执行：
+
 ```
 apt-get install libopus0 ffmpeg 
 ```
@@ -191,9 +197,12 @@ pip install -r requirements.txt
 
 ### 3.下载语音识别模型
 
-默认使用`SenseVoiceSmall`模型，进行语音转文字。因为模型较大，需要独立下载，下载后把`model.pt`文件放在`model/SenseVoiceSmall`目录下。下面两个下载路线任选一个。
+默认使用`SenseVoiceSmall`模型，进行语音转文字。因为模型较大，需要独立下载，下载后把`model.pt`文件放在`model/SenseVoiceSmall`
+目录下。下面两个下载路线任选一个。
+
 - 线路一：阿里魔塔下载[SenseVoiceSmall](https://modelscope.cn/models/iic/SenseVoiceSmall/resolve/master/model.pt)
-- 线路二：百度网盘下载[SenseVoiceSmall](https://pan.baidu.com/share/init?surl=QlgM58FHhYv1tFnUT_A8Sg&pwd=qvna) 提取码: `qvna`
+- 线路二：百度网盘下载[SenseVoiceSmall](https://pan.baidu.com/share/init?surl=QlgM58FHhYv1tFnUT_A8Sg&pwd=qvna) 提取码:
+  `qvna`
 
 ### 4.配置项目
 
@@ -361,4 +370,10 @@ VAD:
 - 感谢[腾讯云](https://cloud.tencent.com/)为本次项目提供免费docker镜像空间。
 - 感谢[十方融海](https://www.tenclass.com/)在小智通讯协议上提供充分的文档支持。
 
-[![Star History Chart](https://api.star-history.com/svg?repos=xinnan-tech/xiaozhi-esp32-server&type=Date)](https://star-history.com/#xinnan-tech/xiaozhi-esp32-server&Date)
+<a href="https://star-history.com/#xinnan-tech/xiaozhi-esp32-server&Date">
+ <picture>
+   <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=xinnan-tech/xiaozhi-esp32-server&type=Date&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=xinnan-tech/xiaozhi-esp32-server&type=Date" />
+   <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=xinnan-tech/xiaozhi-esp32-server&type=Date" />
+ </picture>
+</a>
