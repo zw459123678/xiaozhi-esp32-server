@@ -162,12 +162,21 @@ docker rmi ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
 
 ### 1.安装基础环境
 
-本项目依赖`ffmpeg`、`libopus-dev`、`conda`，安装好后开始执行以下命令。
-
+本项目使用`conda`管理依赖环境，安装好后开始执行以下命令。
 ```
 conda remove -n xiaozhi-esp32-server --all -y
 conda create -n xiaozhi-esp32-server python=3.10 -y
 conda activate xiaozhi-esp32-server
+```
+如果你的电脑是windows，执行：
+```
+conda activate xiaozhi-esp32-server
+conda install conda-forge::libopus
+conda install conda-forge::ffmpeg
+```
+如果你的电脑是ubuntu，执行：
+```
+apt-get install libopus0 ffmpeg 
 ```
 
 ### 2.安装本项目依赖
@@ -351,3 +360,5 @@ VAD:
 - 本项目受[百聆语音对话机器人](https://github.com/wwbin2017/bailing)项目启发，基于该项目的基础思路完成实现。
 - 感谢[腾讯云](https://cloud.tencent.com/)为本次项目提供免费docker镜像空间。
 - 感谢[十方融海](https://www.tenclass.com/)在小智通讯协议上提供充分的文档支持。
+
+[![Star History Chart](https://api.star-history.com/svg?repos=xiaozhi-esp32-server/xiaozhi-esp32-server&type=Date)](https://star-history.com/#xiaozhi-esp32-server/xiaozhi-esp32-server&Date)

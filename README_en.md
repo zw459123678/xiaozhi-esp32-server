@@ -172,13 +172,27 @@ is very useful, and it is required to `compile esp32 firmware` later.
 
 ### 1.Install Prerequisites
 
-This project relies on `ffmpeg`, `libopus-dev`, and `conda`. After installation, it starts executing the following
+This project uses `conda` to manage the dependent environment, and after installation, it starts executing the following
 commands.
 
 ```
 conda remove -n xiaozhi-esp32-server --all -y
 conda create -n xiaozhi-esp32-server python=3.10 -y
 conda activate xiaozhi-esp32-server
+```
+
+If your computer is Windows, execute:
+
+```
+conda activate xiaozhi-esp32-server
+conda install conda-forge::libopus
+conda install conda-forge::ffmpeg
+```
+
+If your computer is ubuntu, execute:
+
+```
+apt-get install libopus0 ffmpeg 
 ```
 
 ### 2.Install Dependencies
@@ -384,3 +398,5 @@ VAD:
 - Thanks to [Tencent Cloud] (https://cloud.tencent.com/) for providing free docker space for this project。
 - Thanks to [tenclass](https://www.tenclass.com/)Provide adequate documentation support on Xiaozhi Communication
   Protocol。
+
+[![Star History Chart](https://api.star-history.com/svg?repos=xiaozhi-esp32-server/xiaozhi-esp32-server&type=Date)](https://star-history.com/#xiaozhi-esp32-server/xiaozhi-esp32-server&Date)
