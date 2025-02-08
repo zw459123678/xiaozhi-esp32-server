@@ -399,4 +399,4 @@ VAD:
 - Thanks to [tenclass](https://www.tenclass.com/)Provide adequate documentation support on Xiaozhi Communication
   Protocol。
 
-[![Star History Chart](https://api.star-history.com/svg?repos=xiaozhi-esp32-server/xiaozhi-esp32-server&type=Date)](https://star-history.com/#xiaozhi-esp32-server/xiaozhi-esp32-server&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=xinnan-tech/xiaozhi-esp32-server&type=Date)](https://star-history.com/#xinnan-tech/xiaozhi-esp32-server&Date)

@@ -361,4 +361,4 @@ VAD:
 - 感谢[腾讯云](https://cloud.tencent.com/)为本次项目提供免费docker镜像空间。
 - 感谢[十方融海](https://www.tenclass.com/)在小智通讯协议上提供充分的文档支持。
 
-[![Star History Chart](https://api.star-history.com/svg?repos=xiaozhi-esp32-server/xiaozhi-esp32-server&type=Date)](https://star-history.com/#xiaozhi-esp32-server/xiaozhi-esp32-server&Date)
+[![Star History Chart](https://api.star-history.com/svg?repos=xinnan-tech/xiaozhi-esp32-server&type=Date)](https://star-history.com/#xinnan-tech/xiaozhi-esp32-server&Date)
