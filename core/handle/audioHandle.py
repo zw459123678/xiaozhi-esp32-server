@@ -56,6 +56,7 @@ async def sendAudioMessage(conn, audios, duration, text):
     base_delay = conn.tts_duration
 
     if text == conn.tts_first_text:
+        logger.info(f"发送第一段语音: {text}")
         conn.tts_start_speak_time = time.time()
         await conn.websocket.send(json.dumps({
             "type": "tts",

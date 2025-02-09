@@ -12,6 +12,9 @@ async def handleTextMessage(conn, message):
     logger.info(f"收到文本消息：{message}")
     try:
         msg_json = json.loads(message)
+        if isinstance(msg_json, int):
+            await conn.websocket.send(message)
+            return
         if msg_json["type"] == "hello":
             await handleHelloMessage(conn)
         elif msg_json["type"] == "abort":

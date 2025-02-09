@@ -42,6 +42,11 @@ VAD:
     min_silence_duration_ms: 700  # 如果说话停顿比较长，可以把这个值设置大一些
 
 LLM:
+  AliLLM:
+    # 可在这里找到你的 api_key https://bailian.console.aliyun.com/?apiKey=1#/api-key
+    base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
+    model_name: qwen-turbo
+    api_key: 你的阿里云dashscope api key
   DeepSeekLLM:
     # 可在这里找到你的api key https://platform.deepseek.com/
     model_name: deepseek-chat
@@ -63,9 +68,11 @@ TTS:
     output_file: tmp/
   DoubaoTTS:
     # 火山引擎语音合成服务，需要先在火山引擎控制台创建应用并获取appid和access_token
+    # 山引擎语音一定要购买花钱，起步价30元，就有100并发了。如果用免费的只有2个并发，会经常报tts错误
+    # 购买服务后，购买免费的音色后，可能要等半小时左右，才能使用。
     # 地址：https://console.volcengine.com/speech/service/8
-    voice: BV407_V2_streaming
+    voice: BV001_streaming
     output_file: tmp/
-    appid: 你的火山引擎appid
-    access_token: 你的火山引擎access_token
+    appid: 你的火山引擎语音合成服务appid
+    access_token: 你的火山引擎语音合成服务access_token
     cluster: volcano_tts

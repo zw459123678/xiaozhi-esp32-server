@@ -111,7 +111,7 @@ class ConnectionHandler:
         # 提交 LLM 任务
         try:
             start_time = time.time()  # 记录开始时间
-            llm_responses = self.llm.response(self, self.dialogue.get_llm_dialogue())
+            llm_responses = self.llm.response(self.session_id, self.dialogue.get_llm_dialogue())
         except Exception as e:
             self.logger.error(f"LLM 处理出错 {query}: {e}")
             return None
@@ -203,6 +203,7 @@ class ConnectionHandler:
 
     def recode_first_last_text(self, text):
         if not self.tts_first_text:
+            self.logger.info(f"大模型说出第一句话: {text}")
             self.tts_first_text = text
         self.tts_last_text = text
 
