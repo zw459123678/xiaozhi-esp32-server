@@ -29,7 +29,7 @@
 - `xiaozhi-esp32` 通信 WebSocket 协议
 - 支持唤醒对话、手动对话、实时打断对话
 - 支持国语、粤语、英语、日语、韩语 5 种语言识别（FunASR（默认））
-- 自由更换 LLM（支持ChatGLM（默认）、Dify、DeepSeek）
+- 自由更换 LLM（支持ChatGLM（默认）、阿里百炼、Dify、DeepSeek）
 - 自由更换 TTS（支持EdgeTTS（默认）、火山引擎豆包TTS）
 
 ## 正在实现
