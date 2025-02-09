@@ -43,17 +43,18 @@ To fully experience this project, follow these steps:
 - Dialogue memory
 - Change the mood mode
 
-## Dependencies
+## Supported Services
 
-| Type | Service    |  Usage   | Pricing Model	 | Notes                                                              |
-|:-----|:-----------|:--------:|:---------------|:-------------------------------------------------------------------|
-| LLM  | DeepSeek   | API call | Token-based    | [Apply for API Key](https://platform.deepseek.com/)                |
-| LLM  | Dify       | API call | Token-based    | Self-hosted                                                        |
-| LLM  | ChatGLMLLM | API call | Free           | [Create API Key](https://bigmodel.cn/usercenter/proj-mgmt/apikeys) |
-| TTS  | DoubaoTTS  | API call | Token-based    | [Create API Key](https://console.volcengine.com/speech/service/8)  |
-| TTS  | EdgeTTS    | API call | 免费             |                                                                    |
-| VAD  | SileroVAD  |  Local   | Free           |                                                                    |
-| ASR  | FunASR     |  Local   | Free           |                                                                    |
+| Type | Service    |  Usage   | Pricing Model	 | Notes                                                                      |
+|:-----|:-----------|:--------:|:---------------|:---------------------------------------------------------------------------|
+| LLM  | Aliyun     | API call | Token-based    | [Apply for API Key](https://bailian.console.aliyun.com/?apiKey=1#/api-key) |
+| LLM  | DeepSeek   | API call | Token-based    | [Apply for API Key](https://platform.deepseek.com/)                        |
+| LLM  | Dify       | API call | Token-based    | Self-hosted                                                                |
+| LLM  | Bigmodel   | API call | Free           | [Create API Key](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)         |
+| TTS  | HuoshanTTS | API call | Token-based    | [Create API Key](https://console.volcengine.com/speech/service/8)          |
+| TTS  | EdgeTTS    | API call | Free           |                                                                            |
+| VAD  | SileroVAD  |  Local   | Free           |                                                                            |
+| ASR  | FunASR     |  Local   | Free           |                                                                            |
 
 # Deployment
 
@@ -111,6 +112,8 @@ supports `Deepseekllm` and` Chatglmllm`. You are modified to the corresponding L
 
 ```
 LLM:
+  AliLLM:
+    ...
   DeepSeekLLM:
     ...
   ChatGLMLLM:

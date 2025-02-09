@@ -38,17 +38,18 @@
 - 对话记忆
 - 更换心情模式
 
-## 本项目依赖服务
+## 本项目支持的平台/组件列表
 
-| 类型  | 服务名称       | 使用方式 | 收费模式    | 备注                                                         |
-|:----|:-----------|:----:|:--------|:-----------------------------------------------------------|
-| LLM | DeepSeek   | 接口调用 | 消耗token | [点击申请密钥](https://platform.deepseek.com/)                   |
-| LLM | Dify       | 接口调用 | 消耗token | 本地化部署                                                      |
-| LLM | ChatGLMLLM | 接口调用 | 免费      | [点击创建密钥](https://bigmodel.cn/usercenter/proj-mgmt/apikeys) |
-| TTS | DoubaoTTS  | 接口调用 | 消耗token | [点击创建密钥](https://console.volcengine.com/speech/service/8)  |
-| TTS | EdgeTTS    | 接口调用 | 免费      |                                                            |
-| VAD | SileroVAD  | 本地使用 | 免费      |                                                            |
-| ASR | FunASR     | 本地使用 | 免费      |                                                            |
+| 类型  | 平台名称      | 使用方式 | 收费模式    | 备注                                                              |
+|:----|:----------|:----:|:--------|:----------------------------------------------------------------|
+| LLM | 阿里百炼      | 接口调用 | 消耗token | [点击申请密钥](https://bailian.console.aliyun.com/?apiKey=1#/api-key) |
+| LLM | 深度求索      | 接口调用 | 消耗token | [点击申请密钥](https://platform.deepseek.com/)                        |
+| LLM | Dify      | 接口调用 | 消耗token | 本地化部署                                                           |
+| LLM | 智谱        | 接口调用 | 免费      | [点击创建密钥](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)      |
+| TTS | 火山引擎      | 接口调用 | 消耗token | [点击创建密钥](https://console.volcengine.com/speech/service/8)       |
+| TTS | EdgeTTS   | 接口调用 | 免费      |                                                                 |
+| VAD | SileroVAD | 本地使用 | 免费      |                                                                 |
+| ASR | FunASR    | 本地使用 | 免费      |                                                                 |
 
 # 部署方式
 
@@ -95,6 +96,8 @@ selected_module:
 
 ```
 LLM:
+  AliLLM:
+    ...
   DeepSeekLLM:
     ...
   ChatGLMLLM:
