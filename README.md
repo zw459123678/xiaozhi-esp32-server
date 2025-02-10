@@ -57,6 +57,8 @@
 
 ## 方式一：docker快速部署
 
+docker镜像已支持x86架构、arm64架构的CPU，支持在国产操作系统上运行。
+
 ### 1. 安装docker
 
 如果您的电脑还没安装docker，可以按照这里的教程安装：[docker安装](https://www.runoob.com/docker/ubuntu-docker-install.html)

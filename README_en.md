@@ -64,6 +64,8 @@ is recommended to run the local source code.
 
 ## Method 1: Quick deployment of docker
 
+The docker image has supported the CPU of x86 architecture and arm64 architecture, and supports running on Chinese operating systems.
+
 1. Install docker
 
 If your computer has not installed docker, you can follow the tutorial here to install
