@@ -64,9 +64,6 @@ is recommended to run the local source code.
 
 ## Method 1: Quick deployment of docker
 
-If your computer is an `arm` architecture computer, please use `Method 2: Run local source code`. The `arm` architecture
-needs to wait for a few more days, because there is currently no mirror that is suitable for the arm architecture.
-
 1. Install docker
 
 If your computer has not installed docker, you can follow the tutorial here to install

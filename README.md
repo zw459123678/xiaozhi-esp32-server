@@ -57,8 +57,6 @@
 
 ## 方式一：docker快速部署
 
-如果你的电脑是`arm`架构的电脑，请暂时使用`方式二：本地源码运行`。`arm`架构需要再等几天，因为目前还没有适配arm架构的镜像。
-
 ### 1. 安装docker
 
 如果您的电脑还没安装docker，可以按照这里的教程安装：[docker安装](https://www.runoob.com/docker/ubuntu-docker-install.html)
