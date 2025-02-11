@@ -27,6 +27,10 @@ To fully experience this project, follow these steps:
   firmware to your device.
 - Start the device and check your server console logs to verify successful connection.
 
+## Warning
+
+This project has been established for a short time and has not passed the network security assessment, so please do not use it in the production environment.
+
 ## Feature List
 
 ## Implemented
