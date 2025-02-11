@@ -1,3 +1,4 @@
+import json
 import logging
 import requests
 from core.providers.llm.base import LLMProviderBase
@@ -32,5 +33,6 @@ class LLMProvider(LLMProviderBase):
                         if event.get('answer'):
                             yield event['answer']
 
-        except Exception:
+        except Exception as e:
+            logger.error(f"Error in response generation: {e}")
             yield "【服务响应异常】"
