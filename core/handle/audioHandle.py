@@ -36,19 +36,10 @@ async def handleAudioMessage(conn, audio):
         conn.reset_vad_states()
 
 async def startToChat(conn, text):
-    stt_text = get_string_no_punctuation_or_emoji(text)
-    await conn.websocket.send(json.dumps({
-        "type": "stt",
-        "text": stt_text,
-        "session_id": conn.session_id}
-    ))
-    await conn.websocket.send(
-        json.dumps({
-            "type": "llm",
-            "text": "😊",
-            "emotion": "happy",
-            "session_id": conn.session_id}
-        ))
+    # 异步发送 stt 信息
+    asyncio.create_task(
+        schedule_with_interrupt(0, send_stt_message(conn, text))
+    )
     conn.executor.submit(conn.chat, text)
 
 
@@ -59,10 +50,6 @@ async def sendAudioMessage(conn, audios, duration, text):
     if text == conn.tts_first_text:
         logger.info(f"发送第一段语音: {text}")
         conn.tts_start_speak_time = time.time()
-        await send_tts_message(conn, "start", text)
-
-    # 先等待0.5秒，确保客户端处于 speaking 状态
-    await asyncio.sleep(0.5)
 
     # 发送 sentence_start（每个音频文件之前发送一次）
     await send_tts_message(conn, "sentence_start", text)
@@ -78,14 +65,11 @@ async def sendAudioMessage(conn, audios, duration, text):
             await send_tts_message(conn, "sentence_end", text)
 
     if conn.llm_finish_task and text == conn.tts_last_text:
-        stop_duration = conn.tts_duration - \
-            (time.time() - conn.tts_start_speak_time)
+        stop_duration = conn.tts_duration - (time.time() - conn.tts_start_speak_time)
         stop_task = asyncio.create_task(
-            schedule_with_interrupt(
-                stop_duration, send_tts_message(conn,  'stop'))
+            schedule_with_interrupt(stop_duration, send_tts_message(conn, 'stop'))
         )
         conn.scheduled_tasks.append(stop_task)
-
 
 async def send_tts_message(conn, state, text=None):
     """发送 TTS 状态消息"""
@@ -100,6 +84,23 @@ async def send_tts_message(conn, state, text=None):
     await conn.websocket.send(json.dumps(message))
     if state == "stop":
         conn.clearSpeakStatus()
+
+async def send_stt_message(conn, text):
+    """发送 STT 状态消息"""
+    stt_text = get_string_no_punctuation_or_emoji(text)
+    await conn.websocket.send(json.dumps({
+        "type": "stt",
+        "text": stt_text,
+        "session_id": conn.session_id}
+    ))
+    await conn.websocket.send(
+        json.dumps({
+            "type": "llm",
+            "text": "😊",
+            "emotion": "happy",
+            "session_id": conn.session_id}
+        ))
+    await send_tts_message(conn, "start")
 
 
 async def schedule_with_interrupt(delay, coro):
