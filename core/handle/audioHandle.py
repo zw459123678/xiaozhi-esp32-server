@@ -55,60 +55,51 @@ async def startToChat(conn, text):
 async def sendAudioMessage(conn, audios, duration, text):
     base_delay = conn.tts_duration
 
+    # 发送 tts.start
     if text == conn.tts_first_text:
         logger.info(f"发送第一段语音: {text}")
         conn.tts_start_speak_time = time.time()
-        await conn.websocket.send(json.dumps({
-            "type": "tts",
-            "state": "start",
-            "session_id": conn.session_id
-        }))
+        await send_tts_message(conn, "start", text)
 
-    # 调度文字显示任务
-    text_task = asyncio.create_task(
-        schedule_with_interrupt(
-            base_delay - 0.5,
-            send_sentence_start(conn, text)
-        )
-    )
-    conn.scheduled_tasks.append(text_task)
+    # 先等待0.5秒，确保客户端处于 speaking 状态
+    await asyncio.sleep(0.5)
 
-    conn.tts_duration = conn.tts_duration + duration
+    # 发送 sentence_start（每个音频文件之前发送一次）
+    await send_tts_message(conn, "sentence_start", text)
+
+    conn.tts_duration += duration
 
     # 发送音频数据
-    for opus_packet in audios:
+    for idx, opus_packet in enumerate(audios):
         await conn.websocket.send(opus_packet)
 
+        # 每个音频文件发送结束时，发送 sentence_end
+        if idx == len(audios) - 1:
+            await send_tts_message(conn, "sentence_end", text)
+
     if conn.llm_finish_task and text == conn.tts_last_text:
-        stop_duration = conn.tts_duration - (time.time() - conn.tts_start_speak_time)
+        stop_duration = conn.tts_duration - \
+            (time.time() - conn.tts_start_speak_time)
         stop_task = asyncio.create_task(
-            schedule_with_interrupt(stop_duration, send_tts_stop(conn, text))
+            schedule_with_interrupt(
+                stop_duration, send_tts_message(conn,  'stop'))
         )
         conn.scheduled_tasks.append(stop_task)
 
 
-async def send_sentence_start(conn, text):
-    await conn.websocket.send(json.dumps({
+async def send_tts_message(conn, state, text=None):
+    """发送 TTS 状态消息"""
+    message = {
         "type": "tts",
-        "state": "sentence_start",
-        "text": text,
+        "state": state,
         "session_id": conn.session_id
-    }))
+    }
+    if text is not None:
+        message["text"] = text
 
-
-async def send_tts_stop(conn, text):
-    await conn.websocket.send(json.dumps({
-        "type": "tts",
-        "state": "sentence_end",
-        "text": text,
-        "session_id": conn.session_id
-    }))
-    await conn.websocket.send(json.dumps({
-        "type": "tts",
-        "state": "stop",
-        "session_id": conn.session_id
-    }))
-    conn.clearSpeakStatus()
+    await conn.websocket.send(json.dumps(message))
+    if state == "stop":
+        conn.clearSpeakStatus()
 
 
 async def schedule_with_interrupt(delay, coro):
