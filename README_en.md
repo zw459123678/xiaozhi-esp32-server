@@ -14,8 +14,13 @@ This project requires compatible esp32 hardware devices. If you have purchased e
 Xiage's deployed backend, and wish to independently set up the `xiaozhi-esp32` backend service, this project is for
 you.
 
-To see a demo, watch this
-video: [Xiaozhi ESP32 Connecting to Custom Backend Model](https://www.bilibili.com/video/BV1FMFyejExX)
+To see a demo, watch this video:
+
+<a href="https://www.bilibili.com/video/BV1FMFyejExX">
+ <picture>
+   <img alt="小智esp32连接自己的后台模型" src="docs/images/demo.png" />
+ </picture>
+</a>
 
 To fully experience this project, follow these steps:
 
