@@ -29,7 +29,8 @@ To fully experience this project, follow these steps:
 
 ## Warning
 
-This project has been established for a short time and has not passed the network security assessment, so please do not use it in the production environment.
+This project has been established for a short time and has not passed the network security assessment, so please do not
+use it in the production environment.
 
 ## Feature List
 
@@ -68,7 +69,8 @@ is recommended to run the local source code.
 
 ## Method 1: Quick deployment of docker
 
-The docker image has supported the CPU of x86 architecture and arm64 architecture, and supports running on Chinese operating systems.
+The docker image has supported the CPU of x86 architecture and arm64 architecture, and supports running on Chinese
+operating systems.
 
 1. Install docker
 
@@ -178,8 +180,7 @@ is very useful, and it is required to `compile esp32 firmware` later.
 
 ### 1.Install Prerequisites
 
-This project uses `conda` to manage the dependent environment, and after installation, it starts executing the following
-commands.
+This project uses 'conda' to manage dependencies, and after installation, start executing the following commands:
 
 ```
 conda remove -n xiaozhi-esp32-server --all -y
@@ -187,7 +188,7 @@ conda create -n xiaozhi-esp32-server python=3.10 -y
 conda activate xiaozhi-esp32-server
 ```
 
-If your computer is Windows, execute:
+After executing the above command, if your computer is Windows or Mac, execute the following statement:
 
 ```
 conda activate xiaozhi-esp32-server
@@ -195,7 +196,7 @@ conda install conda-forge::libopus
 conda install conda-forge::ffmpeg
 ```
 
-If your computer is ubuntu, execute:
+If your computer is ubuntu, execute the following statement:
 
 ```
 apt-get install libopus0 ffmpeg 

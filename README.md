@@ -170,7 +170,7 @@ docker rmi ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
 
 ### 1.安装基础环境
 
-本项目使用`conda`管理依赖环境，安装好后开始执行以下命令。
+本项目使用`conda`管理依赖环境，安装好后，开始执行以下命令。
 
 ```
 conda remove -n xiaozhi-esp32-server --all -y
@@ -178,7 +178,7 @@ conda create -n xiaozhi-esp32-server python=3.10 -y
 conda activate xiaozhi-esp32-server
 ```
 
-如果你的电脑是windows，执行：
+执行以上命令后， 如果你的电脑是Windows或Mac，执行下面的语句：
 
 ```
 conda activate xiaozhi-esp32-server
@@ -186,7 +186,7 @@ conda install conda-forge::libopus
 conda install conda-forge::ffmpeg
 ```
 
-如果你的电脑是ubuntu，执行：
+如果你的电脑是ubuntu，执行下面的语句：
 
 ```
 apt-get install libopus0 ffmpeg 
