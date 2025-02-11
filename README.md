@@ -12,7 +12,13 @@
 本项目需要配合esp32硬件设备使用，如果童鞋们已经购买了esp32相关硬件，且成功对接虾哥部署的后端，并且想自己独立搭建
 `xiaozhi-esp32`后端服务，可学习本项目。
 
-想看使用效果,请猛戳这个视频[小智esp32连接自己的后台模型](https://www.bilibili.com/video/BV1FMFyejExX)
+想看使用效果,请猛戳这个视频
+
+<a href="https://www.bilibili.com/video/BV1FMFyejExX">
+ <picture>
+   <img alt="小智esp32连接自己的后台模型" src="docs/images/demo.png" />
+ </picture>
+</a>
 
 要想完整体验本项目，需要以下总体步骤：
 
@@ -21,6 +27,10 @@
 - 拥有一台至少4核CPU 8G内存的普通电脑或服务器，运行本项目。部署后可以在控制台看到本项目服务的接口地址。
 - 下载`xiaozhi-esp32`项目，把`接口地址`修改成本项目地址，然后编译，把新固件烧录到硬件设备上。
 - 启动设备，查看电脑或服务器的控制台，如果看到日志，说明成功连到本项目的接口了。
+
+## 警告
+
+本项目成立时间较短，还未通过网络安全测评，请勿在生产环境中使用。
 
 ## 功能清单
 
@@ -166,7 +176,7 @@ docker rmi ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
 
 ### 1.安装基础环境
 
-本项目使用`conda`管理依赖环境，安装好后开始执行以下命令。
+本项目使用`conda`管理依赖环境，安装好后，开始执行以下命令。
 
 ```
 conda remove -n xiaozhi-esp32-server --all -y
@@ -174,7 +184,7 @@ conda create -n xiaozhi-esp32-server python=3.10 -y
 conda activate xiaozhi-esp32-server
 ```
 
-如果你的电脑是windows，执行：
+执行以上命令后， 如果你的电脑是Windows或Mac，执行下面的语句：
 
 ```
 conda activate xiaozhi-esp32-server
@@ -182,7 +192,7 @@ conda install conda-forge::libopus
 conda install conda-forge::ffmpeg
 ```
 
-如果你的电脑是ubuntu，执行：
+如果你的电脑是ubuntu，执行下面的语句：
 
 ```
 apt-get install libopus0 ffmpeg 
