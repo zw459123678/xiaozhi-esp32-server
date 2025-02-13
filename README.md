@@ -187,11 +187,18 @@ docker rmi ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
 
 这个方法的原理，其实是和第一种方式类似。区别在于，第一种方式只要下载一个配置文件，而本方式要下载项目源码。
 
-优点就是源码在你主机躺着，你可以使用本机的代码编辑器加载项目。每次修改完项目，想要看效果，那就要重启docker。
+优点就是源码在你主机躺着，你可以使用本机的代码编辑器加载项目和修改源码。每次修改完项目，想要看效果，那就要重启docker。
 
-缺点就要下载本项目的代码，如果这个项目不常用，确实会占用您电脑的空间。
+缺点就要下载本项目的代码，还要下载模型文件，如果这个项目不常用，确实会占用您电脑的空间。
 
-下载源码后，需要按照`方式一：docker快速部署`修改配置文件`config.yaml`
+下载源码后，需要下载模型文件。 默认使用`SenseVoiceSmall`模型，进行语音转文字。因为模型较大，需要独立下载，下载后把`model.pt`文件放在`model/SenseVoiceSmall`
+目录下。下面两个下载路线任选一个。
+
+- 线路一：阿里魔塔下载[SenseVoiceSmall](https://modelscope.cn/models/iic/SenseVoiceSmall/resolve/master/model.pt)
+- 线路二：百度网盘下载[SenseVoiceSmall](https://pan.baidu.com/share/init?surl=QlgM58FHhYv1tFnUT_A8Sg&pwd=qvna) 提取码:
+  `qvna`
+
+下载模型后，需要按照`方式一：docker快速部署`修改配置文件`config.yaml`
 
 修改完配置后，打开命令行工具，`cd`进入到你的项目目录下，执行以下命令
 
