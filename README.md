@@ -39,7 +39,7 @@
 - `xiaozhi-esp32` 通信 WebSocket 协议
 - 支持唤醒对话、手动对话、实时打断对话
 - 支持国语、粤语、英语、日语、韩语 5 种语言识别（FunASR（默认））
-- 自由更换 LLM（支持ChatGLM（默认）、阿里百炼、Dify、DeepSeek）
+- 自由更换 LLM（openai接口支持ChatGLM（默认）、阿里百炼、DeepSeek等，dify接口支持Dify官方及私有化部署）
 - 自由更换 TTS（支持EdgeTTS（默认）、火山引擎豆包TTS）
 
 ## 正在实现
@@ -52,14 +52,16 @@
 
 | 类型  | 平台名称      | 使用方式 | 收费模式    | 备注                                                              |
 |:----|:----------|:----:|:--------|:----------------------------------------------------------------|
-| LLM | 阿里百炼      | 接口调用 | 消耗token | [点击申请密钥](https://bailian.console.aliyun.com/?apiKey=1#/api-key) |
-| LLM | 深度求索      | 接口调用 | 消耗token | [点击申请密钥](https://platform.deepseek.com/)                        |
-| LLM | Dify      | 接口调用 | 消耗token | 本地化部署                                                           |
-| LLM | 智谱        | 接口调用 | 免费      | [点击创建密钥](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)      |
+| LLM | 阿里百炼      | openai接口调用 | 消耗token | [点击申请密钥](https://bailian.console.aliyun.com/?apiKey=1#/api-key) |
+| LLM | 深度求索      | openai接口调用 | 消耗token | [点击申请密钥](https://platform.deepseek.com/)                        |
+| LLM | 智谱        | openai接口调用 | 免费      | [点击创建密钥](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)      |
+| LLM | Dify      | dify接口调用 | 消耗token | 本地化部署                                                           |
 | TTS | 火山引擎      | 接口调用 | 消耗token | [点击创建密钥](https://console.volcengine.com/speech/service/8)       |
 | TTS | EdgeTTS   | 接口调用 | 免费      |                                                                 |
 | VAD | SileroVAD | 本地使用 | 免费      |                                                                 |
 | ASR | FunASR    | 本地使用 | 免费      |                                                                 |
+
+实际上，任何支持openai接口调用的LLM，都可以接入使用。
 
 # 部署方式
 
@@ -110,17 +112,23 @@ selected_module:
   TTS: EdgeTTS
 ```
 
-比如修改`LLM`使用的组件，就看本项目支持哪些`LLM`，如下就是支持`DeepSeekLLM`、`ChatGLMLLM`。你们在`selected_module`修改成对应的LLM
+比如修改`LLM`使用的组件，就看本项目支持哪些`LLM` API接口，当前支持的是`openai`、`dify`。欢迎验证和支持更多LLM平台的接口。
+
+使用时，在`selected_module`修改成对应的如下LLM配置的名称：
 
 ```
 LLM:
   AliLLM:
+    type: openai
     ...
   DeepSeekLLM:
+    type: openai
     ...
   ChatGLMLLM:
+    type: openai
     ...
   DifyLLM:
+    type: dify
     ...
 ```
 
@@ -276,8 +284,7 @@ pip install -r requirements.txt
 目录下。下面两个下载路线任选一个。
 
 - 线路一：阿里魔塔下载[SenseVoiceSmall](https://modelscope.cn/models/iic/SenseVoiceSmall/resolve/master/model.pt)
-- 线路二：百度网盘下载[SenseVoiceSmall](https://pan.baidu.com/share/init?surl=QlgM58FHhYv1tFnUT_A8Sg&pwd=qvna) 提取码:
-  `qvna`
+- 线路二：百度网盘下载[SenseVoiceSmall](https://pan.baidu.com/share/init?surl=QlgM58FHhYv1tFnUT_A8Sg&pwd=qvna) 提取码:  `qvna`
 
 ### 4.配置项目
 
@@ -296,15 +303,19 @@ selected_module:
   TTS: EdgeTTS
 ```
 
-比如修改`LLM`使用的组件，就看本项目支持哪些`LLM`，如下就是支持`DeepSeekLLM`、`ChatGLMLLM`。你们在`selected_module`修改成对应的LLM
+比如修改`LLM`使用的组件，就看本项目支持哪些`LLM` API接口，当前支持的是`openai`、`dify`。欢迎验证和支持更多LLM平台的接口。
+使用时，在`selected_module`修改成对应的如下LLM配置的名称：
 
 ```
 LLM:
   DeepSeekLLM:
+    type: openai
     ...
   ChatGLMLLM:
+    type: openai
     ...
   DifyLLM:
+    type: dify
     ...
 ```
 
