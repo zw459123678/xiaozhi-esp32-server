@@ -15,12 +15,14 @@ from core.handle.textHandle import handleTextMessage
 from core.utils.util import get_string_no_punctuation_or_emoji
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
 from core.handle.audioHandle import handleAudioMessage, sendAudioMessage
+from .auth import AuthMiddleware, AuthenticationError
 
 
 class ConnectionHandler:
     def __init__(self, config: Dict[str, Any], _vad, _asr, _llm, _tts):
         self.config = config
         self.logger = logging.getLogger(__name__)
+        self.auth = AuthMiddleware(config)
 
         self.websocket = None
         self.headers = None
@@ -67,27 +69,42 @@ class ConnectionHandler:
         self.tts_duration = 0
 
     async def handle_connection(self, ws):
-        self.websocket = ws
-        """处理单个WebSocket连接"""
-        self.headers = dict(self.websocket.request.headers)
-        self.logger.info(f"连接建立，请求头：\n{self.headers}")
-
-        self.welcome_msg = self.config["xiaozhi"]
-        self.session_id = str(uuid.uuid4())
-        self.welcome_msg["session_id"] = self.session_id
-        await self.websocket.send(json.dumps(self.welcome_msg))
-
-        await self.loop.run_in_executor(None, self._initialize_components)
-
-        tts_priority = threading.Thread(target=self._priority_thread, daemon=True)
-        tts_priority.start()
-
         try:
-            async for message in self.websocket:
-                await self._route_message(message)
-        except websockets.exceptions.ConnectionClosed:
-            self.logger.info("客户端断开连接")
-            await self.close()
+            # 获取并验证headers
+            self.headers = dict(ws.request.headers)
+            self.logger.info(f"New connection request - Headers: {self.headers}")
+            
+            # 进行认证
+            await self.auth.authenticate(self.headers)
+            
+            # 认证通过,继续处理
+            self.websocket = ws
+            self.session_id = str(uuid.uuid4())
+            
+            self.welcome_msg = self.config["xiaozhi"]
+            self.welcome_msg["session_id"] = self.session_id
+            await self.websocket.send(json.dumps(self.welcome_msg))
+
+            await self.loop.run_in_executor(None, self._initialize_components)
+
+            tts_priority = threading.Thread(target=self._priority_thread, daemon=True)
+            tts_priority.start()
+
+            try:
+                async for message in self.websocket:
+                    await self._route_message(message)
+            except websockets.exceptions.ConnectionClosed:
+                self.logger.info("客户端断开连接")
+                await self.close()
+                
+        except AuthenticationError as e:
+            self.logger.error(f"Authentication failed: {str(e)}")
+            await ws.close()
+            return
+        except Exception as e:
+            self.logger.error(f"Connection error: {str(e)}")
+            await ws.close()
+            return
 
     async def _route_message(self, message):
         """消息路由"""
