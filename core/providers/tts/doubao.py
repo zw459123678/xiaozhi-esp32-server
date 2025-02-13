@@ -6,6 +6,7 @@ import requests
 from datetime import datetime
 from core.providers.tts.base import TTSProviderBase
 
+
 class TTSProvider(TTSProviderBase):
     def __init__(self, config, delete_audio_file):
         super().__init__(config, delete_audio_file)

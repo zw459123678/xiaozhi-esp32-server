@@ -5,6 +5,7 @@ from core.providers.llm.base import LLMProviderBase
 
 logger = logging.getLogger(__name__)
 
+
 class LLMProvider(LLMProviderBase):
     def __init__(self, config):
         self.api_key = config["api_key"]

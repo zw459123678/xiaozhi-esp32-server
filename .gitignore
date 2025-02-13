@@ -140,3 +140,4 @@ cython_debug/
 model.pt
 tmp
 .DS_Store
+.config.yaml

@@ -1,19 +1,13 @@
 import asyncio
 import logging
 import os
-import json
-import uuid
-import base64
-# from datetime import datetime
-# import edge_tts
 import numpy as np
 import opuslib
-# import requests
-# from core.utils.util import read_config, get_project_dir
 from pydub import AudioSegment
 from abc import ABC, abstractmethod
 
 logger = logging.getLogger(__name__)
+
 
 class TTSProviderBase(ABC):
     def __init__(self, config, delete_audio_file):
@@ -34,8 +28,8 @@ class TTSProviderBase(ABC):
                     max_repeat_time = max_repeat_time - 1
                     logger.error(f"语音生成失败: {text}:{tmp_file}，再试{max_repeat_time}次")
 
-            if max_repeat_time>0:
-                logger.info(f"语音生成成功: {text}:{tmp_file}，重试{5-max_repeat_time}次")
+            if max_repeat_time > 0:
+                logger.info(f"语音生成成功: {text}:{tmp_file}，重试{5 - max_repeat_time}次")
 
             return tmp_file
         except Exception as e:

@@ -1,19 +1,9 @@
-import asyncio
-import logging
 import os
 import sys
-import json
-import uuid
-import base64
+import logging
 import importlib
 from datetime import datetime
-import edge_tts
-import numpy as np
-import opuslib
-import requests
 from core.utils.util import read_config, get_project_dir
-from pydub import AudioSegment
-from abc import ABC, abstractmethod
 
 logger = logging.getLogger(__name__)
 

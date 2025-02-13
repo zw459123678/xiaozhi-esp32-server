@@ -4,6 +4,7 @@ from core.providers.llm.base import LLMProviderBase
 
 logger = logging.getLogger(__name__)
 
+
 class LLMProvider(LLMProviderBase):
     def __init__(self, config):
         self.model_name = config.get("model_name")
@@ -12,6 +13,8 @@ class LLMProvider(LLMProviderBase):
             self.base_url = config.get("base_url")
         else:
             self.base_url = config.get("url")
+        if "你" in self.api_key:
+            logger.error("你还没配置LLM的密钥，请在配置文件中配置密钥，否则无法正常工作")
         self.client = openai.OpenAI(api_key=self.api_key, base_url=self.base_url)
 
     def response(self, session_id, dialogue):
