@@ -217,6 +217,15 @@ pip install -r requirements.txt
 - 线路二：百度网盘下载[SenseVoiceSmall](https://pan.baidu.com/share/init?surl=QlgM58FHhYv1tFnUT_A8Sg&pwd=qvna) 提取码:
   `qvna`
 
+## 方式三：本地开发但是环境不好配置
+
+```
+docker run -d --name xiaozhi-esp32-server --restart always --security-opt seccomp:unconfined \
+  -p 8000:8000 \
+  -v ./:/opt/xiaozhi-esp32-server \
+  ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
+```
+
 ### 4.配置项目
 
 修改`config.yaml`文件，配置本项目所需的各种参数。默认的LLM使用的是`ChatGLMLLM`，你需要配置密钥，才能启动。
