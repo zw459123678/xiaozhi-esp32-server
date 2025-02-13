@@ -62,6 +62,7 @@ LLM:
   ChatGLMLLM:
     # 定义LLM API类型
     type: openai
+    # glm-4-flash 是免费的，但是还是需要注册填写api_key的
     # 可在这里找到你的api key https://bigmodel.cn/usercenter/proj-mgmt/apikeys
     model_name: glm-4-flash
     url: https://open.bigmodel.cn/api/paas/v4/
