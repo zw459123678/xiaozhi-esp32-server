@@ -12,6 +12,13 @@ logger = logging.getLogger(__name__)
 
 
 class LLM(ABC):
+    def __init__(self, config):
+        api_key = config.get("api_key")
+        # 如果api_key包含中文“你”
+        if "你" in api_key:
+            logger.error("你还没配置LLM的密钥，请在配置文件中配置密钥，否则无法正常工作")
+        pass
+
     @abstractmethod
     def response(self, session_id, dialogue):
         """LLM response generator"""
@@ -20,6 +27,7 @@ class LLM(ABC):
 
 class DeepSeekLLM(LLM):
     def __init__(self, config):
+        super().__init__(config)
         self.model_name = config.get("model_name")
         self.api_key = config.get("api_key")
         self.base_url = config.get("url")
@@ -46,6 +54,7 @@ class DeepSeekLLM(LLM):
 
 class ChatGLMLLM(LLM):
     def __init__(self, config):
+        super().__init__(config)
         self.model_name = config.get("model_name")
         self.api_key = config.get("api_key")
         self.base_url = config.get("url")
@@ -70,6 +79,7 @@ class ChatGLMLLM(LLM):
 
 class AliLLM(LLM):
     def __init__(self, config):
+        super().__init__(config)
         self.model_name = config.get("model_name")
         self.api_key = config.get("api_key")
         self.base_url = config.get("base_url")
@@ -94,6 +104,7 @@ class AliLLM(LLM):
 
 class DifyLLM(LLM):
     def __init__(self, config):
+        super().__init__(config)
         self.api_key = config["api_key"]
         self.base_url = config.get("base_url", "https://api.dify.ai/v1").rstrip('/')
 
