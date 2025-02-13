@@ -63,7 +63,15 @@
 
 # 部署方式
 
-本项目支持docker快速部署和本地源码运行。如果您主要是想快速体验，推荐使用docker部署。如果想深入了解本项目，推荐本地源码运行。
+本项目支持docker快速部署、借助docker环境运行部署和本地源码运行三种方式。三种方式怎么选，每个人的情况不一样，一下是一些推荐。
+
+如果您主要是想快速体验，推荐使用`方式一：docker快速部署`。
+
+如果您已经安装docker，不想折腾环境，又想对代码进行DIY修改，推荐`方式二：借助docker环境运行部署`。
+
+如果您对conda的使用得心应手，或想学习从零开始搭建环境，推荐`方式三：本地源码运行`。
+
+如果你对小智的回答速度非常的敏感，不希望有丝丝的性能损失，推荐`方式三：本地源码运行`。
 
 ## 方式一：docker快速部署
 
@@ -86,7 +94,7 @@ docker镜像已支持x86架构、arm64架构的CPU，支持在国产操作系统
 
 ### 4. 修改配置文件
 
-修改刚才你下载的`config.yaml`文件，配置本项目所需的各种参数。默认的LLM使用的是`ChatGLMLLM`，你需要配置密钥，才能启动。
+修改刚才你下载的`config.yaml`文件，配置本项目所需的各种参数。默认的LLM使用的是`ChatGLMLLM`，你需要配置密钥，因为他们的模型，虽然有免费的，但是仍要去[官网](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)注册密钥，才能启动。
 
 默认的TTS使用的是`EdgeTTS`，这个无需配置，如果你需要更换成`豆包TTS`，则需要配置密钥。
 
@@ -132,7 +140,7 @@ dir
 如果你能看到`config.yaml`文件，确确实实进入到了`项目目录`，接着执行以下命令：
 
 ```
-docker run -d --name xiaozhi-esp32-server --restart always --security-opt seccomp:unconfined -p 8000:8000 -v $(pwd)/config.yaml:/opt/xiaozhi-es32-server/config.yaml ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
+docker run -d --name xiaozhi-esp32-server --restart always --security-opt seccomp:unconfined -p 8000:8000 -v $(pwd)/config.yaml:/opt/xiaozhi-esp32-server/config.yaml ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
 ```
 
 如果首次执行，可能需要几分钟时间，你要耐心等待他完成拉取。正常拉取完成后，你可以在命令行执行以下命令查看服务是否启动成功
@@ -158,6 +166,9 @@ docker logs -f xiaozhi-esp32-server
 正常来说，假设你的ip是`192.168.1.25`，那么你的接口地址就是：`ws://192.168.1.25:8000`。这个信息很有用的，后面`编译esp32固件`
 需要用到。
 
+请注意，你的接口地址是`websocket`协议的地址，你可以使用`apifox`等工具调试。但是不能直接用浏览器打开访问，如果用浏览器打开，日志会显示错误，会让你怀疑是否部署成功了。
+
+
 后期如果想升级版本，可以这么操作
 
 1、备份好`config.yaml`文件，一些关键的配置到时复制到新的`config.yaml`文件里。
@@ -172,7 +183,51 @@ docker rmi ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
 
 3.按本教程重新来一遍
 
-## 方式二：本地源码运行
+## 方式二：借助docker环境运行部署
+
+这个方法的原理，其实是和第一种方式类似。区别在于，第一种方式只要下载一个配置文件，而本方式要下载项目源码。
+
+优点就是源码在你主机躺着，你可以使用本机的代码编辑器加载项目。每次修改完项目，想要看效果，那就要重启docker。
+
+缺点就要下载本项目的代码，如果这个项目不常用，确实会占用您电脑的空间。
+
+下载源码后，需要按照`方式一：docker快速部署`修改配置文件`config.yaml`
+
+修改完配置后，打开命令行工具，`cd`进入到你的项目目录下，执行以下命令
+
+```
+docker run -d --name xiaozhi-esp32-server --restart always --security-opt seccomp:unconfined \
+  -p 8000:8000 \
+  -v $(pwd):/opt/xiaozhi-esp32-server \
+  ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
+```
+
+```
+docker logs -f xiaozhi-esp32-server
+```
+
+如果你能看到，类似以下日志,则是本项目服务启动成功的标志。
+
+```
+2025-xx-xx xx:51:59,492 - core.server - INFO - Server is running at ws://xx.xx.xx.xxx:8000
+2025-xx-xx xx:51:59,516 - websockets.server - INFO - server listening on 0.0.0.0:8000
+```
+
+接下来，你就可以开始 `编译esp32固件`了，请往下翻，翻到编译`esp32固件`相关章节。那么由于你是用docker部署，你要自己查看自己本机电脑的ip是多少。
+正常来说，假设你的ip是`192.168.1.25`，那么你的接口地址就是：`ws://192.168.1.25:8000`。这个信息很有用的，后面`编译esp32固件`
+需要用到。
+
+请注意，你的接口地址是`websocket`协议的地址，你可以使用`apifox`等工具调试。但是不能直接用浏览器打开访问，如果用浏览器打开，日志会显示错误，会让你怀疑是否部署成功了。
+
+后期，如果你修改了代码，想让新代码跑起来，可以用以下命令让docker容器重启：
+
+```
+docker restart xiaozhi-esp32-server
+# 查看日志输出
+docker logs -f xiaozhi-esp32-server
+```
+
+## 方式三：本地源码运行
 
 ### 1.安装基础环境
 
@@ -217,18 +272,9 @@ pip install -r requirements.txt
 - 线路二：百度网盘下载[SenseVoiceSmall](https://pan.baidu.com/share/init?surl=QlgM58FHhYv1tFnUT_A8Sg&pwd=qvna) 提取码:
   `qvna`
 
-## 方式三：本地开发但是环境不好配置
-
-```
-docker run -d --name xiaozhi-esp32-server --restart always --security-opt seccomp:unconfined \
-  -p 8000:8000 \
-  -v ./:/opt/xiaozhi-esp32-server \
-  ccr.ccs.tencentyun.com/xinnan/xiaozhi-esp32-server:latest
-```
-
 ### 4.配置项目
 
-修改`config.yaml`文件，配置本项目所需的各种参数。默认的LLM使用的是`ChatGLMLLM`，你需要配置密钥，才能启动。
+修改`config.yaml`文件，配置本项目所需的各种参数。默认的LLM使用的是`ChatGLMLLM`，你需要配置密钥，因为他们的模型，虽然有免费的，但是仍要去[官网](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)注册密钥，才能启动。
 默认的TTS使用的是`EdgeTTS`，这个无需配置，如果你需要更换成`豆包TTS`，则需要配置密钥。
 
 配置说明：这里是各个功能使用的默认组件，例如LLM默认使用`ChatGLMLLM`模型。如果需要切换模型，就是改对应的名称。
@@ -276,6 +322,8 @@ python app.py
 
 其中上面的`ws://192.168.1.25:8000`就是本项目提供的接口地址了，当然你自己的机器和我的是不一样的，记得要找到自己的地址。
 
+请注意，你的接口地址是`websocket`协议的地址，你可以使用`apifox`等工具调试。但是不能直接用浏览器打开访问，如果用浏览器打开，日志会显示错误，会让你怀疑是否部署成功了。
+
 # 编译esp32固件
 
 1. 下载`xiaozhi-esp32`
@@ -305,6 +353,13 @@ config WEBSOCKET_URL
     help
         Communication with the server through websocket after wake up.
 ```
+
+注意：你的地址是`ws://`开头，不是`wss://`开头，一定不要写错了。
+
+注意：你的地址是`ws://`开头，不是`wss://`开头，一定不要写错了。
+
+注意：你的地址是`ws://`开头，不是`wss://`开头，一定不要写错了。
+
 
 3. 设置编译参数
 
