@@ -68,19 +68,25 @@ class ConnectionHandler:
         self.tts_start_speak_time = None
         self.tts_duration = 0
 
+        self.cmd_exit = self.config["CMD_exit"]
+        self.max_cmd_length = 0
+        for cmd in self.cmd_exit:
+            if len(cmd) > self.max_cmd_length:
+                self.max_cmd_length = len(cmd)
+
     async def handle_connection(self, ws):
         try:
             # 获取并验证headers
             self.headers = dict(ws.request.headers)
             self.logger.info(f"New connection request - Headers: {self.headers}")
-            
+
             # 进行认证
             await self.auth.authenticate(self.headers)
-            
+
             # 认证通过,继续处理
             self.websocket = ws
             self.session_id = str(uuid.uuid4())
-            
+
             self.welcome_msg = self.config["xiaozhi"]
             self.welcome_msg["session_id"] = self.session_id
             await self.websocket.send(json.dumps(self.welcome_msg))
@@ -96,7 +102,7 @@ class ConnectionHandler:
             except websockets.exceptions.ConnectionClosed:
                 self.logger.info("客户端断开连接")
                 await self.close()
-                
+
         except AuthenticationError as e:
             self.logger.error(f"Authentication failed: {str(e)}")
             await ws.close()
