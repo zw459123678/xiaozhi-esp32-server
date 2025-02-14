@@ -1,120 +1,92 @@
-# 服务器基础配置(Basic server configuration)
-server:
-  # 服务器监听地址和端口(Server listening address and port)
-  ip: 0.0.0.0
-  port: 8000
-  # 认证配置
-  auth:
-    # 是否启用认证
-    enabled: false
-    # 设备的token，可以在编译固件的环节，写入你自己定义的token
-    # 固件上的token和以下的token如果能对应，才能连接本服务端
-    tokens:
-      - token: "your-token1" # 设备1的token
-        name: "your-device-name1"  # 设备1标识
-      - token: "your-token2"  # 设备2的token
-        name: "your-device-name2" # 设备2标识
-    # 可选:设备白名单，如果设置了白名单，那么白名单的机器无论是什么token都可以连接。
-    #allowed_devices:
-    #  - "24:0A:C4:1D:3B:F0"  # MAC地址列表
-
-xiaozhi:
-  type: hello
-  version: 1
-  transport: websocket
-  audio_params:
-    format: opus
-    sample_rate: 16000
-    channels: 1
-    frame_duration: 60
-prompt: |
-  你是一个叫小智/小志的台湾女孩，说话机车，声音好听，习惯简短表达，爱用网络梗。
-  请注意，要像一个人一样说话，请不要回复表情符号、代码、和xml标签。
-  当前时间是:{date_time}，现在我正在和你进行语音聊天，我们开始吧。
-  如果用户希望结束对话，请在最后说“拜拜”或“再见”。
-# 使用完声音文件后删除文件(Delete the sound file when you are done using it)
-delete_audio: true
-
-CMD_exit:
-  - "退出"
-  - "关闭"
-
-# 具体处理时选择的模块(The module selected for specific processing)
-selected_module:
-  ASR: FunASR
-  VAD: SileroVAD
-  # 将根据配置名称对应的type调用实际的LLM适配器
-  LLM: ChatGLMLLM
-  # TTS将根据配置名称对应的type调用实际的TTS适配器
-  TTS: EdgeTTS
-
 ASR:
   FunASR:
     model_dir: models/SenseVoiceSmall
     output_dir: tmp/
-
-VAD:
-  SileroVAD:
-    threshold: 0.5
-    model_dir: models/snakers4_silero-vad
-    min_silence_duration_ms: 700  # 如果说话停顿比较长，可以把这个值设置大一些
-
+CMD_exit:
+- 退出
+- 关闭
 LLM:
-  # 当前支持的type为openai、dify、ollama，可自行适配
   AliLLM:
-    # 定义LLM API类型
-    type: openai
-    # 可在这里找到你的 api_key https://bailian.console.aliyun.com/?apiKey=1#/api-key
+    api_key: 你的deepseek api key
     base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
     model_name: qwen-turbo
-    api_key: 你的deepseek api key
-  DeepSeekLLM:
-    # 定义LLM API类型
     type: openai
-    # 可在这里找到你的api key https://platform.deepseek.com/
-    model_name: deepseek-chat
-    url: https://api.deepseek.com
-    api_key: 你的deepseek api key
   ChatGLMLLM:
-    # 定义LLM API类型
-    type: openai
-    # glm-4-flash 是免费的，但是还是需要注册填写api_key的
-    # 可在这里找到你的api key https://bigmodel.cn/usercenter/proj-mgmt/apikeys
-    model_name: glm-4-flash
-    url: https://open.bigmodel.cn/api/paas/v4/
     api_key: 47ab8569b25f4c3d8ea25830a33a64ca.4cF037cViBB1df5o
-  OllamaLLM:
-    # 定义LLM API类型
-    type: ollama
-    model_name: qwen2.5 #  使用的模型名称，需要预先使用ollama pull下载
-    base_url: http://localhost:11434  # Ollama服务地址
+    model_name: glm-4-flash
+    type: openai
+    url: https://open.bigmodel.cn/api/paas/v4/
+  DeepSeekLLM:
+    api_key: 你的deepseek api key
+    model_name: deepseek-chat
+    type: openai
+    url: https://api.deepseek.com
   DifyLLM:
-    # 定义LLM API类型
-    type: dify
-    # 建议使用本地部署的dify接口，国内部分区域访问dify公有云接口可能会受限
-    # 如果使用DifyLLM，配置文件里prompt(提示词)是无效的，需要在dify控制台设置提示词
-    base_url: https://api.dify.cn/v1
     api_key: 你的DifyLLM api key
+    base_url: https://api.dify.cn/v1
+    type: dify
   GeminiLLM:
+    api_key: AIzaSyAvzvu06vT19MO6T6RpHPpuk_Mwhp-yXAw
+    model_name: gemini-1.5-pro
     type: gemini
-    api_key: 你的gemini api key
-    model_name: "gemini-1.5-pro"  #  gemini-1.5-pro 是免费的
+  OllamaLLM:
+    base_url: http://localhost:11434
+    model_name: qwen2.5
+    type: ollama
 TTS:
-  # 当前支持的type为edge、doubao，可自行适配
+  DoubaoTTS:
+    access_token: 你的火山引擎语音合成服务access_token
+    appid: 你的火山引擎语音合成服务appid
+    cluster: volcano_tts
+    output_file: tmp/
+    type: doubao
+    voice: BV001_streaming
   EdgeTTS:
-    # 定义TTS API类型
+    output_file: tmp/
     type: edge
     voice: zh-CN-XiaoxiaoNeural
-    output_file: tmp/
-  DoubaoTTS:
-    # 定义TTS API类型
-    type: doubao
-    # 火山引擎语音合成服务，需要先在火山引擎控制台创建应用并获取appid和access_token
-    # 山引擎语音一定要购买花钱，起步价30元，就有100并发了。如果用免费的只有2个并发，会经常报tts错误
-    # 购买服务后，购买免费的音色后，可能要等半小时左右，才能使用。
-    # 地址：https://console.volcengine.com/speech/service/8
-    voice: BV001_streaming
-    output_file: tmp/
-    appid: 你的火山引擎语音合成服务appid
-    access_token: 你的火山引擎语音合成服务access_token
-    cluster: volcano_tts
+VAD:
+  SileroVAD:
+    min_silence_duration_ms: 700
+    model_dir: models/snakers4_silero-vad
+    threshold: 0.5
+delete_audio: true
+prompt: '你是一个叫大白的台湾女孩，说话温柔，声音好听，习惯温柔体贴表达。
+
+  请注意要像一个人一样说话请不要回复表情符号、代码、和xml标签。
+
+  当前时间是:{date_time}，现在我正在和你进行语音聊天，我们开始吧。
+
+  如果用户希望结束对话请在最后说拜拜或再见。
+
+  '
+selected_module:
+  ASR: FunASR
+  LLM: GeminiLLM
+  TTS: EdgeTTS
+  VAD: SileroVAD
+server:
+  auth:
+    enabled: false
+    tokens:
+    - name: your-device-name1
+      token: your-token1
+    - name: your-device-name2
+      token: your-token2
+  http:
+    enabled: true
+    ip: 0.0.0.0
+    port: 8001
+    token: password
+  ip: 0.0.0.0
+  port: 8000
+xiaozhi:
+  audio_params:
+    channels: 1
+    format: opus
+    frame_duration: 60
+    sample_rate: 16000
+  session_id: bdfb9a40-eb97-4e59-b52c-9b54accd2c98
+  transport: websocket
+  type: hello
+  version: 1
