@@ -138,9 +138,10 @@ class ConnectionHandler:
         # 处理剩余的响应
         if start < len(response_message):
             segment_text = "".join(response_message[start:])
-            self.recode_first_last_text(segment_text)
-            future = self.executor.submit(self.speak_and_play, segment_text)
-            self.tts_queue.put(future)
+            if len(segment_text) > 0:
+                self.recode_first_last_text(segment_text)
+                future = self.executor.submit(self.speak_and_play, segment_text)
+                self.tts_queue.put(future)
 
         self.llm_finish_task = True
         # 更新对话
@@ -159,6 +160,11 @@ class ConnectionHandler:
                 try:
                     self.logger.debug("正在处理TTS任务...")
                     tts_file, text = future.result(timeout=10)
+                    if text is None or len(text) <= 0:
+                        continue
+                    if tts_file is None:
+                        self.logger.error(f"TTS文件生成失败: {text}")
+                        continue
                     self.logger.debug(f"TTS文件生成完毕，文件路径: {tts_file}")
                     if os.path.exists(tts_file):
                         opus_datas, duration = self.tts.wav_to_opus_data(tts_file)
@@ -191,11 +197,11 @@ class ConnectionHandler:
     def speak_and_play(self, text):
         if text is None or len(text) <= 0:
             self.logger.info(f"无需tts转换，query为空，{text}")
-            return None
+            return None, text
         tts_file = self.tts.to_tts(text)
         if tts_file is None:
             self.logger.error(f"tts转换失败，{text}")
-            return None
+            return None, text
         self.logger.debug(f"TTS 文件生成完毕: {tts_file}")
         return tts_file, text
 
