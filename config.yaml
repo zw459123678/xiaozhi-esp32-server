@@ -10,10 +10,10 @@ server:
   auth:
     enabled: true  # 是否启用认证
     tokens:
-      - token: "your-secure-token-1"  # 设备1的token
-        name: "device1"               # 设备标识
-      - token: "your-secure-token-2"  # 设备2的token 
-        name: "device2"
+      - token: "test-token" # 设备1的token 
+        name: "xiaozhi-default"  # 设备1标识
+      - token: "your-token"  # 设备2的token 
+        name: "your-device-name" # 设备2标识
     # 可选:设备白名单
     #allowed_devices:
     #  - "24:0A:C4:1D:3B:F0"  # MAC地址列表
