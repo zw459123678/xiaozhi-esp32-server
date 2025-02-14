@@ -68,6 +68,12 @@ class ConnectionHandler:
         self.tts_start_speak_time = None
         self.tts_duration = 0
 
+        self.cmd_exit = self.config["CMD_exit"]
+        self.max_cmd_lenth = 0
+        for cmd in self.cmd_exit:
+            if len(cmd) > self.max_cmd_lenth:
+                self.max_cmd_lenth = len(cmd)
+
     async def handle_connection(self, ws):
         try:
             # 获取并验证headers
