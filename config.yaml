@@ -5,7 +5,7 @@ server:
   port: 8000
   # 认证配置
   auth:
-    enabled: true  # 是否启用认证
+    enabled: false  # 是否启用认证
     tokens:
       - token: "test-token" # 设备1的token 
         name: "xiaozhi-default"  # 设备1标识
