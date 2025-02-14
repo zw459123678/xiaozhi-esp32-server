@@ -3,9 +3,17 @@ server:
   # 服务器监听地址和端口(Server listening address and port)
   ip: 0.0.0.0
   port: 8000
-  # 服务器是否只接受来自esp32-小智的连接，为了安全起见，建议设置为true
-  # Whether the server only accepts connections from ESP32-Ash is recommended to be set to true for security purposes
-  only_esp32_xiaozhi_connect: false
+  # 认证配置
+  auth:
+    enabled: true  # 是否启用认证
+    tokens:
+      - token: "test-token" # 设备1的token 
+        name: "xiaozhi-default"  # 设备1标识
+      - token: "your-token"  # 设备2的token 
+        name: "your-device-name" # 设备2标识
+    # 可选:设备白名单
+    #allowed_devices:
+    #  - "24:0A:C4:1D:3B:F0"  # MAC地址列表
 
 xiaozhi:
   type: hello
@@ -51,7 +59,7 @@ LLM:
     # 可在这里找到你的 api_key https://bailian.console.aliyun.com/?apiKey=1#/api-key
     base_url: https://dashscope.aliyuncs.com/compatible-mode/v1
     model_name: qwen-turbo
-    api_key: 你的阿里云dashscope api key
+    api_key: 你的deepseek api key
   DeepSeekLLM:
     # 定义LLM API类型
     type: openai
@@ -66,7 +74,7 @@ LLM:
     # 可在这里找到你的api key https://bigmodel.cn/usercenter/proj-mgmt/apikeys
     model_name: glm-4-flash
     url: https://open.bigmodel.cn/api/paas/v4/
-    api_key: 你的bigmodel api key
+    api_key: 你的ChatGLMLLM api key
   OllamaLLM:
     # 定义LLM API类型
     type: ollama
@@ -77,8 +85,8 @@ LLM:
     type: dify
     # 建议使用本地部署的dify接口，国内部分区域访问dify公有云接口可能会受限
     # 如果使用DifyLLM，配置文件里prompt(提示词)是无效的，需要在dify控制台设置提示词
-    base_url: 你的私有化部署的dify接口地址
-    api_key: 你的dify api key
+    base_url: https://api.dify.cn/v1
+    api_key: 你的DifyLLM api key
 TTS:
   # 当前支持的type为edge、doubao，可自行适配
   EdgeTTS:
