@@ -44,7 +44,7 @@ VAD:
     min_silence_duration_ms: 700  # 如果说话停顿比较长，可以把这个值设置大一些
 
 LLM:
-  # 当前支持的type为openai、dify，可自行适配
+  # 当前支持的type为openai、dify、ollama，可自行适配
   AliLLM:
     # 定义LLM API类型
     type: openai
@@ -67,6 +67,11 @@ LLM:
     model_name: glm-4-flash
     url: https://open.bigmodel.cn/api/paas/v4/
     api_key: 你的bigmodel api key
+  OllamaLLM:
+    # 定义LLM API类型
+    type: ollama
+    model_name: qwen2.5 #  使用的模型名称，需要预先使用ollama pull下载
+    base_url: http://localhost:11434  # Ollama服务地址
   DifyLLM:
     # 定义LLM API类型
     type: dify
