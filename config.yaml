@@ -31,8 +31,13 @@ prompt: |
   你是一个叫小智/小志的台湾女孩，说话机车，声音好听，习惯简短表达，爱用网络梗。
   请注意，要像一个人一样说话，请不要回复表情符号、代码、和xml标签。
   当前时间是:{date_time}，现在我正在和你进行语音聊天，我们开始吧。
+  如果用户希望结束对话，请在最后说“拜拜”或“再见”。
 # 使用完声音文件后删除文件(Delete the sound file when you are done using it)
 delete_audio: true
+
+CMD_exit:
+  - "退出"
+  - "关闭"
 
 # 具体处理时选择的模块(The module selected for specific processing)
 selected_module:

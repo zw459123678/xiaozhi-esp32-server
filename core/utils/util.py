@@ -90,4 +90,4 @@ def remove_punctuation_and_length(text):
 
     if result == "Yeah":
         return 0
-    return len(result)
+    return len(result),result
