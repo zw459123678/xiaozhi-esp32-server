@@ -3,9 +3,6 @@ server:
   # 服务器监听地址和端口(Server listening address and port)
   ip: 0.0.0.0
   port: 8000
-  # 服务器是否只接受来自esp32-小智的连接，为了安全起见，建议设置为true
-  # Whether the server only accepts connections from ESP32-Ash is recommended to be set to true for security purposes
-  only_esp32_xiaozhi_connect: true
   # 认证配置
   auth:
     enabled: true  # 是否启用认证
