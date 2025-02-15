@@ -51,15 +51,26 @@
     <div class="animated-bg"></div>
     <app-header>xiaozhi-esp32-server</app-header>
 
-    <div class="content-container">
-        <div class="role-title">配置角色：</div>
-        <div class="role-id">cc:ba:97:11:a6:ac</div>
+    <div class="user-menu">
+        <el-dropdown @command="handleCommand">
+            <div class="user-info">
+                <el-avatar :size="32" src="https://cube.elemecdn.com/3/7c/3ea6beec64369c2642b92c6726f1epng.png"/>
+                <span class="user-name">管理员</span>
+            </div>
+            <template #dropdown>
+                <el-dropdown-menu>
+                    <el-dropdown-item command="logout">退出</el-dropdown-item>
+                </el-dropdown-menu>
+            </template>
+        </el-dropdown>
+    </div>
 
+    <div class="content-container">
         <div class="role-description">角色介绍</div>
         <el-input
                 type="textarea"
                 v-model="form.prompt"
-                :rows="6"
+                :rows="10"
                 resize="vertical"
                 @input="updateCharCount"
         ></el-input>
@@ -67,7 +78,7 @@
 
         <div class="button-group">
             <el-button type="primary" @click="savePrompt">保存配置</el-button>
-            <el-button @click="resetPrompt">重置</el-button>
+            <el-button @click="loadPrompt">重置</el-button>
         </div>
 
         <div class="note">注意：保存配置后，需要重启设备，新的配置才会生效。</div>
@@ -121,7 +132,17 @@
                         });
                     }
                 });
-            }
+            },
+            // 新增退出处理方法
+            handleCommand(command) {
+                if (command === 'logout') {
+                    this.handleLogout();
+                }
+            },
+            handleLogout() {
+                localStorage.removeItem('token');
+                location.href = 'login.html';
+            },
         },
         mounted() {
             this.loadPrompt();

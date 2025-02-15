@@ -60,7 +60,30 @@ body {
 }
 
 @keyframes gradient {
-    0% { background-position: 0% 50% }
-    50% { background-position: 100% 50% }
-    100% { background-position: 0% 50% }
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+.user-menu {
+    position: fixed;
+    top: 23px;
+    right: 32px;
+    z-index: 1000;
+    cursor: pointer;
+}
+
+.user-info {
+    align-items: center;
+}
+
+.user-name {
+    font-size: 14px;
+    color: #606266;
 }
