@@ -41,10 +41,11 @@
 import { ref, onMounted } from 'vue';
 import NavBar from './NavBar.vue';
 import DeviceCard from './DeviceCard.vue';
+import { API_BASE_URL } from '../config/api';
 
 const emit = defineEmits(['show-role', 'go-home']);
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
+const baseUrl = API_BASE_URL;
 const devices = ref([]);
 
 const formatLastActivity = (timestamp) => {
