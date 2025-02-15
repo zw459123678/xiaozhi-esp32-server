@@ -29,6 +29,7 @@ class PromptApi:
                 return response_success()
 
             self.config['prompt'] = data['prompt']
+            # TODO 保存到配置文件
             return response_success()
 
         except Exception as e:

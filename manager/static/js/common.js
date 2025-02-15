@@ -1,5 +1,5 @@
 function post(api, bodyData, fn) {
-    let basePath = 'http://localhost:8001';
+    let basePath = '';
     let token = localStorage.getItem('token');
     fetch(basePath + api, {
         method: "POST",
