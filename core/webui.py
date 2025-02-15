@@ -3,6 +3,7 @@ import sys
 import logging
 from aiohttp import web
 from aiohttp_cors import setup as cors_setup, ResourceOptions
+from core.utils.util import get_local_ip
 
 # 添加项目根目录到Python路径
 current_dir = os.path.dirname(os.path.abspath(__file__))
@@ -68,6 +69,7 @@ class WebUI:
 
         # 添加静态文件服务
         self.app.router.add_static('/assets/', path=os.path.join(self.static_path, 'assets'))
+        # 所有未匹配的路由都返回 index.html
         self.app.router.add_get('/{tail:.*}', self.handle_static_files)
 
     async def handle_static_files(self, request):
@@ -79,6 +81,8 @@ class WebUI:
 
     def run(self, host='0.0.0.0', port=8002):
         """运行服务器"""
+        local_ip = get_local_ip()
+        logger.info(f"WebUI server is running at http://{local_ip}:{port}")
         web.run_app(self.app, host=host, port=port)
 
 if __name__ == '__main__':

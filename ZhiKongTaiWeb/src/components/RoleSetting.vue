@@ -51,7 +51,7 @@
               </option>
             </select>
             <div class="model-description">
-              除了“qwen-turbo”，其他模型通常会增加约 1 秒的延迟。改变模型后，建议清空记忆体，以免影响体验。
+              除了"qwen-turbo"，其他模型通常会增加约 1 秒的延迟。改变模型后，建议清空记忆体，以免影响体验。
             </div>
           </div>
         </div>
@@ -109,6 +109,7 @@
 import { ref, onMounted } from 'vue';
 import NavBar from './NavBar.vue';
 import RoleTemplates from '../utils/RoleTemplates';
+import { API_BASE_URL } from '../config/api';
 
 const roleTemplates = RoleTemplates.getTemplates();
 
@@ -120,7 +121,7 @@ const activeMemoryTab = ref('recent');
 const memoryContent = ref('');
 const selectedModel = ref('qianwen');
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL;
+const baseUrl = API_BASE_URL;
 const moduleOptions = ref({
   LLM: [],
   TTS: [],
