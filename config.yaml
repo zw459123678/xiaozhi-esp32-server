@@ -21,7 +21,8 @@ manager:
   enabled: false
   ip: 0.0.0.0
   port: 8001
-  token: password
+  # 请把密码设置10位数，且不能包含xiaozhi这几个字符
+  password: 123456
 
 xiaozhi:
   type: hello
