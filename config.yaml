@@ -97,6 +97,10 @@ LLM:
     api_key: 你的DifyLLM api key
   GeminiLLM:
     type: gemini
+    # 谷歌Gemini API，需要先在Google Cloud控制台创建API密钥并获取api_key
+    # 若在中国境内使用，请遵守《生成式人工智能服务管理暂行办法》
+    # token申请地址： https://aistudio.google.com/apikey
+    # 若部署地无法访问接口，需要开启科学上网
     api_key: 你的gemini api key
     model_name: "gemini-1.5-pro"  #  gemini-1.5-pro 是免费的
 TTS:
@@ -120,6 +124,8 @@ TTS:
     cluster: volcano_tts
   CosyVoiceSiliconflow:
     type: siliconflow
+    # 硅基流动TTS
+    # token申请地址 https://cloud.siliconflow.cn/account/ak
     model: FunAudioLLM/CosyVoice2-0.5B
     voice: FunAudioLLM/CosyVoice2-0.5B:alex
     output_file: tmp/
