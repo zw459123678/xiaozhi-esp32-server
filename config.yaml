@@ -137,3 +137,11 @@ TTS:
     output_file: tmp/
     access_token: 你的硅基流动API密钥
     response_format: wav
+  CozeCnTTS:
+    type: cozecn
+    # COZECN TTS
+    # token申请地址 https://coze.cn/
+    voice: 7426720361733046281
+    output_file: tmp/
+    access_token: 你的coze api key
+    response_format: wav
