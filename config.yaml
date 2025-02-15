@@ -118,7 +118,7 @@ TTS:
     appid: 你的火山引擎语音合成服务appid
     access_token: 你的火山引擎语音合成服务access_token
     cluster: volcano_tts
-CosyVoiceSiliconflow:
+  CosyVoiceSiliconflow:
     type: siliconflow
     model: FunAudioLLM/CosyVoice2-0.5B
     voice: FunAudioLLM/CosyVoice2-0.5B:alex
