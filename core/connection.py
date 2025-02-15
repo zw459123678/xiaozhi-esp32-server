@@ -15,8 +15,8 @@ from core.handle.textHandle import handleTextMessage
 from core.utils.util import get_string_no_punctuation_or_emoji
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
 from core.handle.audioHandle import handleAudioMessage, sendAudioMessage
-from .auth import AuthMiddleware, AuthenticationError
-from config.private_config import PrivateConfig  # Updated import path
+from config.private_config import PrivateConfig
+from core.auth import AuthMiddleware, AuthenticationError
 
 class ConnectionHandler:
     def __init__(self, config: Dict[str, Any], _vad, _asr, _llm, _tts):
