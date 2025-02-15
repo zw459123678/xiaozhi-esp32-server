@@ -14,7 +14,7 @@ async def main():
     
     # 启动 HTTP 配置服务器
     http_runner = None
-    if config['server'].get('http', {}).get('enabled', False):
+    if config['manager'].get('enabled', False):
         config_server = ConfigServer(config)
         try:
             http_runner = await config_server.start()

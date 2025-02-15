@@ -17,11 +17,11 @@ server:
     # 可选:设备白名单，如果设置了白名单，那么白名单的机器无论是什么token都可以连接。
     #allowed_devices:
     #  - "24:0A:C4:1D:3B:F0"  # MAC地址列表
-  http:
-    enabled: false
-    ip: 0.0.0.0
-    port: 8001
-    token: password
+manager:
+  enabled: false
+  ip: 0.0.0.0
+  port: 8001
+  token: password
 
 xiaozhi:
   type: hello
