@@ -56,20 +56,8 @@ body {
     z-index: -1;
     background: linear-gradient(-45deg, #1a1f25, #0d1117, #162030, #1c1c1c);
     background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
 }
 
-@keyframes gradient {
-    0% {
-        background-position: 0% 50%
-    }
-    50% {
-        background-position: 100% 50%
-    }
-    100% {
-        background-position: 0% 50%
-    }
-}
 
 .user-menu {
     position: fixed;
