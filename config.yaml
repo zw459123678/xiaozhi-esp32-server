@@ -45,6 +45,9 @@ prompt: |
 # 使用完声音文件后删除文件(Delete the sound file when you are done using it)
 delete_audio: true
 
+# 是否启用私有配置(Enable private configuration),启用后可以每个设备有不同的配置
+use_private_config: false
+
 CMD_exit:
   - "退出"
   - "关闭"
