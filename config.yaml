@@ -137,3 +137,24 @@ TTS:
     output_file: tmp/
     access_token: 你的硅基流动API密钥
     response_format: wav
+  FishSpeech:
+    # 定义TTS API类型
+    type: fishspeech
+    output_file: tmp/
+    response_format: wav
+    reference_id: null
+    reference_audio: ["/tmp/test.wav",]
+    reference_text: ["你弄来这些吟词宴曲来看，还是这些混话来欺负我。",]
+    normalize: true
+    max_new_tokens: 1024
+    chunk_length: 200
+    top_p: 0.7
+    repetition_penalty: 1.2
+    temperature: 0.7
+    streaming: false
+    use_memory_cache: "on"
+    seed: null
+    channels: 1
+    rate: 44100
+    api_key: "YOUR_API_KEY"
+    api_url: "http://127.0.0.1:8080/v1/tts"
