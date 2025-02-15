@@ -15,7 +15,7 @@ from core.handle.textHandle import handleTextMessage
 from core.utils.util import get_string_no_punctuation_or_emoji
 from concurrent.futures import ThreadPoolExecutor, TimeoutError
 from core.handle.audioHandle import handleAudioMessage, sendAudioMessage
-from .auth import AuthMiddleware, AuthenticationError
+from core.auth import AuthMiddleware, AuthenticationError
 
 
 class ConnectionHandler:

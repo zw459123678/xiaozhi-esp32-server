@@ -1,8 +1,8 @@
 import asyncio
 from config.logger import setup_logging
 from config.settings import load_config
-from core.server import WebSocketServer
-from core.http_server import ConfigServer
+from core.websocket_server import WebSocketServer
+from manager.http_server import ConfigServer
 
 async def main():
     setup_logging()  # 最先初始化日志
