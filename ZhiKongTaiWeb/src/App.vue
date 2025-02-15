@@ -24,7 +24,7 @@
 import Login from './components/Login.vue';
 import Registration from './components/Registration.vue';
 import panel from './components/panel.vue';
-import MainPage from './components/main.vue';
+import MainPage from './components/Main.vue';
 import RoleSetting from './components/RoleSetting.vue';
 import Footer from './components/Footer.vue';
 
