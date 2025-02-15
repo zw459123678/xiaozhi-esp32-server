@@ -1,21 +1,19 @@
+# 添加项目根目录到Python路径
 import os
 import sys
-import logging
-from aiohttp import web
-from aiohttp_cors import setup as cors_setup, ResourceOptions
-from core.utils.util import get_local_ip
-
-# 添加项目根目录到Python路径
 current_dir = os.path.dirname(os.path.abspath(__file__))
 root_dir = os.path.dirname(current_dir)
 sys.path.append(root_dir)
 
+import logging
+from aiohttp import web
+from aiohttp_cors import setup as cors_setup, ResourceOptions
+from core.utils.util import get_local_ip
 from manager.api.login import LoginHandler
 from manager.api.register import RegisterHandler
-from manager.user_manager import UserManager
+from manager.api.user_manager import UserManager
 from manager.api.config import ConfigHandler
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 class WebUI:
