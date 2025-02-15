@@ -82,7 +82,7 @@ LLM:
     # 可在这里找到你的api key https://bigmodel.cn/usercenter/proj-mgmt/apikeys
     model_name: glm-4-flash
     url: https://open.bigmodel.cn/api/paas/v4/
-    api_key: 你的ChatGLMLLM api key
+    api_key: 47ab8569b25f4c3d8ea25830a33a64ca.4cF037cViBB1df5o
   OllamaLLM:
     # 定义LLM API类型
     type: ollama
@@ -95,6 +95,10 @@ LLM:
     # 如果使用DifyLLM，配置文件里prompt(提示词)是无效的，需要在dify控制台设置提示词
     base_url: https://api.dify.cn/v1
     api_key: 你的DifyLLM api key
+  GeminiLLM:
+    type: gemini
+    api_key: 你的gemini api key
+    model_name: "gemini-1.5-pro"  #  gemini-1.5-pro 是免费的
 TTS:
   # 当前支持的type为edge、doubao，可自行适配
   EdgeTTS:
