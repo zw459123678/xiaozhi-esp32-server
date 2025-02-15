@@ -22,11 +22,11 @@ server:
     #allowed_devices:
     #  - "24:0A:C4:1D:3B:F0"  # MAC地址列表
 manager:
+  # 是否启用管理后台
+  # 目前这个模块还在开发中，建议：不要修改enabled选项
   enabled: false
   ip: 0.0.0.0
-  port: 8001
-  # 请把密码设置10位数，且不能包含xiaozhi这几个字符
-  password: 123456
+  port: 8002
 
 xiaozhi:
   type: hello
