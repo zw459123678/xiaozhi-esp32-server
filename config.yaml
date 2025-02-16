@@ -189,3 +189,28 @@ TTS:
     rate: 44100
     api_key: "你的api_key"
     api_url: "http://127.0.0.1:8080/v1/tts"
+  GPT_SOVITS_V2:
+    # 定义TTS API类型
+    #启动tts方法：
+    #python api_v2.py -a 127.0.0.1 -p 9880 -c GPT_SoVITS/configs/caixukun.yaml
+    type: gpt_sovits_v2
+    url: "http://127.0.0.1:9880/tts"
+    output_file: tmp/
+    text_lang: "auto"
+    ref_audio_path: "caixukun.wav"
+    prompt_text: ""
+    prompt_lang: "zh"
+    top_k: 5
+    top_p: 1
+    temperature: 1
+    text_split_method: "cut0"
+    batch_size: 1
+    batch_threshold: 0.75
+    split_bucket: true
+    return_fragment: false
+    speed_factor: 1.0
+    streaming_mode: false
+    seed: -1
+    parallel_infer: true
+    repetition_penalty: 1.35
+    aux_ref_audio_paths: []
