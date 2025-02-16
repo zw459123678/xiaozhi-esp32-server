@@ -46,6 +46,9 @@ prompt: |
 # 使用完声音文件后删除文件(Delete the sound file when you are done using it)
 delete_audio: true
 
+# 没有语音输入多久后断开连接(秒)，默认2分钟，即120秒
+close_connection_no_voice_time: 120
+
 # 是否启用私有配置(Enable private configuration),启用后可以每个设备有不同的配置
 # 目前这个模块还在开发中，建议：不要修改use_private_config选项
 use_private_config: false
