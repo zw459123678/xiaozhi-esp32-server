@@ -59,6 +59,12 @@ idf.py menuconfig
 idf.py build
 ```
 
+如果是vscode安装的idf可以使用`F1`或者`ctrl+shift+p`,输入idf然后直接选择进行编译
+
+还可以直接进行烧录不用接下来的操作
+
+<img src="./images/vscode_idf.png" width="500px"/>
+
 5. 打包bin固件
 
 ```

@@ -12,6 +12,8 @@
 
 本项目需要配合 ESP32 硬件设备使用。如果您已经购买了 ESP32 相关硬件，且成功对接过虾哥部署的后端服务，并希望独立搭建自己的 `xiaozhi-esp32` 后端服务，那么本项目非常适合您。
 
+跳转到[使用方式](#使用方式-)
+
 想看使用效果？请猛戳这个视频 🎥
 
 <a href="https://www.bilibili.com/video/BV1FMFyejExX">
@@ -81,7 +83,7 @@ server:
 | LLM  | 智谱（ChatGLMLLM）                    | openai 接口调用     | 消耗 token    | 需注册申请 API key，请参考 [BigModel](https://bigmodel.cn/usercenter/proj-mgmt/apikeys)        |
 | LLM  | OllamaLLM                     | ollama 接口调用     | 免费/自定义   | 需预先下载模型（`ollama pull`），服务地址：`http://localhost:11434`                         |
 | LLM  | DifyLLM                       | dify 接口调用       | 消耗 token    | 本地化部署，注意配置提示词需在 Dify 控制台设置                                             |
-| LLM  | GeminiLLM                     | gemini 接口调用     | 免费          | [申请 API](https://aistudio.google.com/apikey)；请遵守使用规定                                |
+| LLM  | GeminiLLM                     | gemini 接口调用     | 免费          | [点击申请密钥](https://aistudio.google.com/apikey)                                |
 | LLM  | CozeLLM                       | coze 接口调用       | 消耗 token    | 需提供 bot_id、user_id 及个人令牌                                                           |
 
 实际上，任何支持 openai 接口调用的 LLM 均可接入使用。
@@ -117,19 +119,22 @@ server:
 
 ---
 
-## 部署方式 🚀
+## 使用方式 🚀
 
-[部署文档](./docs/Deployment.md)
+### 一、[部署文档](./docs/Deployment.md)
 
 本项目支持以下三种部署方式，您可根据实际需求选择：
 
-1. **Docker 快速部署**  
+1. **[Docker 快速部署](./docs/Deployment.md#%E6%96%B9%E5%BC%8F%E4%B8%80docker%E5%BF%AB%E9%80%9F%E9%83%A8%E7%BD%B2)**  
    适合快速体验，不需过多环境配置。
-2. **借助 Docker 环境运行部署**  
+2. **[借助 Docker 环境运行部署](./docs/Deployment.md#%E6%96%B9%E5%BC%8F%E4%BA%8C%E5%80%9F%E5%8A%A9docker%E7%8E%AF%E5%A2%83%E8%BF%90%E8%A1%8C%E9%83%A8%E7%BD%B2)**  
    适用于已安装 Docker 且希望对代码进行自定义修改的用户。
-3. **本地源码运行**  
+3. **[本地源码运行](./docs/Deployment.md#%E6%96%B9%E5%BC%8F%E4%B8%89%E6%9C%AC%E5%9C%B0%E6%BA%90%E7%A0%81%E8%BF%90%E8%A1%8C)**  
    适合熟悉 Conda 环境或希望从零搭建运行环境的用户。  
    对于对响应速度要求较高的场景，推荐使用本地源码运行方式以降低额外开销。
+
+
+### 二、[固件编译](./docs/firmware-build.md)
 
 ---
 
