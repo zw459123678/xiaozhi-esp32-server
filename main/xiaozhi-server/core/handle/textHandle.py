@@ -7,6 +7,7 @@ from core.handle.receiveAudioHandle import startToChat, handleAudioMessage
 from core.handle.sendAudioHandle import send_stt_message, send_tts_message
 from core.providers.tools.device_iot import handleIotDescriptors, handleIotStatus
 from core.handle.reportHandle import enqueue_asr_report
+from plugins_func.functions.play_story import handle_story_command
 import asyncio
 
 TAG = __name__
@@ -26,6 +27,9 @@ async def handleTextMessage(conn, message):
         elif msg_json["type"] == "abort":
             conn.logger.bind(tag=TAG).info(f"收到abort消息：{message}")
             await handleAbortMessage(conn)
+        elif msg_json["type"] == "story":
+            conn.logger.bind(tag=TAG).info(f"收到story消息：{message}")
+            await handle_story_command(conn)
         elif msg_json["type"] == "listen":
             conn.logger.bind(tag=TAG).info(f"收到listen消息：{message}")
             if "mode" in msg_json:
