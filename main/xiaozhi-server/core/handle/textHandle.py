@@ -29,7 +29,7 @@ async def handleTextMessage(conn, message):
             await handleAbortMessage(conn)
         elif msg_json["type"] == "story":
             conn.logger.bind(tag=TAG).info(f"收到story消息：{message}")
-            await handle_story_command(conn)
+            await handle_story_command(conn, "随机播放故事")
         elif msg_json["type"] == "listen":
             conn.logger.bind(tag=TAG).info(f"收到listen消息：{message}")
             if "mode" in msg_json:
