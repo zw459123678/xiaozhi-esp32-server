@@ -207,7 +207,7 @@ async def cleanup_temp_story_file(file_path):
         logger.warning(f"清理临时故事文件失败: {str(e)}")
 
 
-async def handle_story_command(conn, text=None):
+async def handle_story_command(conn, text="播放随机故事"):
     conn.logger.bind(tag=TAG).info(f"play story on device {conn.device_id}")
     initialize_story_config(conn)
     
