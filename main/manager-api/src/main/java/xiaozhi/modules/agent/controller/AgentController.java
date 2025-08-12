@@ -39,11 +39,13 @@ import xiaozhi.modules.agent.dto.AgentChatSessionDTO;
 import xiaozhi.modules.agent.dto.AgentCreateDTO;
 import xiaozhi.modules.agent.dto.AgentDTO;
 import xiaozhi.modules.agent.dto.AgentMemoryDTO;
+import xiaozhi.modules.agent.dto.AgentMigrateDTO;
 import xiaozhi.modules.agent.dto.AgentUpdateDTO;
 import xiaozhi.modules.agent.entity.AgentEntity;
 import xiaozhi.modules.agent.entity.AgentTemplateEntity;
 import xiaozhi.modules.agent.service.AgentChatAudioService;
 import xiaozhi.modules.agent.service.AgentChatHistoryService;
+import xiaozhi.modules.agent.service.AgentMigrationService;
 import xiaozhi.modules.agent.service.AgentPluginMappingService;
 import xiaozhi.modules.agent.service.AgentService;
 import xiaozhi.modules.agent.service.AgentTemplateService;
@@ -64,6 +66,7 @@ public class AgentController {
     private final AgentChatHistoryService agentChatHistoryService;
     private final AgentChatAudioService agentChatAudioService;
     private final AgentPluginMappingService agentPluginMappingService;
+    private final AgentMigrationService agentMigrationService;
     private final RedisUtils redisUtils;
 
     @GetMapping("/list")
@@ -138,6 +141,22 @@ public class AgentController {
         // 再删除智能体
         agentService.deleteById(id);
         return new Result<>();
+    }
+
+    @PostMapping("/migrate")
+    @Operation(summary = "智能体迁移")
+    @RequiresPermissions("sys:role:normal")
+    public Result<Void> migrateAgent(@RequestBody @Valid AgentMigrateDTO dto) {
+        agentMigrationService.migrateAgent(dto);
+        return new Result<>();
+    }
+
+    @PostMapping("/migrate/validate")
+    @Operation(summary = "验证智能体迁移请求")
+    @RequiresPermissions("sys:role:normal")
+    public Result<String> validateMigration(@RequestBody @Valid AgentMigrateDTO dto) {
+        boolean isValid = agentMigrationService.validateMigrationRequest(dto);
+        return new Result<String>().ok(isValid ? "验证通过，可以执行迁移" : "验证失败");
     }
 
     @GetMapping("/template")

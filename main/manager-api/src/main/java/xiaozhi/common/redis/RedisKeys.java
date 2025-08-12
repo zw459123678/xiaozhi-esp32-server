@@ -139,4 +139,11 @@ public class RedisKeys {
         return "sms:Validate:Code:" + phone + ":today_count";
     }
 
+    /**
+     * 获取设备配置缓存key
+     */
+    public static String getDeviceConfigKey(String macAddress) {
+        return "device:config:" + macAddress.replace(":", "_").toLowerCase();
+    }
+
 }
