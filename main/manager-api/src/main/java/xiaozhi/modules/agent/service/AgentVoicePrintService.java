@@ -2,8 +2,11 @@ package xiaozhi.modules.agent.service;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.service.IService;
+
 import xiaozhi.modules.agent.dto.AgentVoicePrintSaveDTO;
 import xiaozhi.modules.agent.dto.AgentVoicePrintUpdateDTO;
+import xiaozhi.modules.agent.entity.AgentVoicePrintEntity;
 import xiaozhi.modules.agent.vo.AgentVoicePrintVO;
 
 /**
@@ -11,7 +14,7 @@ import xiaozhi.modules.agent.vo.AgentVoicePrintVO;
  *
  * @author zjy
  */
-public interface AgentVoicePrintService {
+public interface AgentVoicePrintService extends IService<AgentVoicePrintEntity> {
     /**
      * 添加智能体新的声纹
      *

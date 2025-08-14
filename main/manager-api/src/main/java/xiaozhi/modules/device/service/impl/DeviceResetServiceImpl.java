@@ -284,7 +284,7 @@ public class DeviceResetServiceImpl implements DeviceResetService {
                      .set("summary_memory", null)
                      .set("updated_at", new Date());
         
-        boolean result = agentService.update(updateWrapper);
+        boolean result = agentService.update(null, updateWrapper);
         
         log.info("智能体记忆重置完成: 重置结果 {}", result);
         return result;
