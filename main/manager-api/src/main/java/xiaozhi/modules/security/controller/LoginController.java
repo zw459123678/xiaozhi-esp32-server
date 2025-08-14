@@ -1,10 +1,7 @@
 package xiaozhi.modules.security.controller;
 
 import java.io.IOException;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -200,7 +197,7 @@ public class LoginController {
 
         // 按照用户名获取用户
         SysUserDTO userDTO = sysUserService.getByUsername(login.getUsername());
-        if (userDTO != null) {
+        if (!Objects.isNull(userDTO)) {
             throw new RenException("此用户名已经注册过");
         }
         userDTO = new SysUserDTO();
@@ -216,7 +213,7 @@ public class LoginController {
         // 按照用户名获取用户
         SysUserDTO userDTO = sysUserService.getByUsername(login.getUsername());
         // 判断用户是否存在
-        if (userDTO != null) {
+        if (Objects.isNull(userDTO)) {
             throw new RenException("请检测用户和密码是否输入错误");
         }
         // 判断密码是否正确，不一样则进入if
