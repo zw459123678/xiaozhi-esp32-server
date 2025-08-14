@@ -194,6 +194,39 @@ public class LoginController {
         return new Result<>();
     }
 
+    @PostMapping("/auto-register")
+    @Operation(summary = "自动注册")
+    public Result<Void> autoRegister(@RequestBody LoginDTO login) {
+
+        // 按照用户名获取用户
+        SysUserDTO userDTO = sysUserService.getByUsername(login.getUsername());
+        if (userDTO != null) {
+            throw new RenException("此用户名已经注册过");
+        }
+        userDTO = new SysUserDTO();
+        userDTO.setUsername(login.getUsername());
+        userDTO.setPassword(login.getPassword());
+        sysUserService.save(userDTO);
+        return new Result<>();
+    }
+
+    @PostMapping("auto-login")
+    @Operation(summary = "自动登录")
+    public Result<TokenDTO> autoLogin(@RequestBody LoginDTO login) {
+        // 按照用户名获取用户
+        SysUserDTO userDTO = sysUserService.getByUsername(login.getUsername());
+        // 判断用户是否存在
+        if (userDTO != null) {
+            throw new RenException("请检测用户和密码是否输入错误");
+        }
+        // 判断密码是否正确，不一样则进入if
+        if (PasswordUtils.matches(login.getPassword(),
+                userDTO.getPassword())) {
+            return sysUserTokenService.createToken(userDTO.getId());
+        }
+        throw new RenException("请检测用户和密码是否输入错误");
+    }
+
     @GetMapping("/pub-config")
     @Operation(summary = "公共配置")
     public Result<Map<String, Object>> pubConfig() {
